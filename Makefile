@@ -1,5 +1,4 @@
 # BPP_PACKAGE_VERSION=`yolk -V bpp-iplweb|head|sed s/bpp-iplweb\ //`
-
 BPP_PACKAGE_VERSION=1.0.26.1
 BPP_PACKAGE=bpp-iplweb==$(BPP_PACKAGE_VERSION)
 
