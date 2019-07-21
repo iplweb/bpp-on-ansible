@@ -13,6 +13,17 @@ stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostn
 stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/celery-worker-stderr
 directory={{ django_home_dir }}
 
+[program:listen-cachequeue-{{ django_hostname }}]
+command={{ django_home_dir }}/vexec bpp-manage.py listen_cachequeue
+user={{ django_user }}
+autostart=true
+autorestart=true
+numprocs=1
+environment=USER="{{ django_user }}"
+stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/listen-cachequeue-stdout
+stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/listen-cachequeue-stderr
+directory={{ django_home_dir }}
+
 [program:celery-beat-{{ django_hostname }}]
 command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/celery
     beat
