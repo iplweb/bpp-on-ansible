@@ -64,4 +64,4 @@ stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostn
 
 
 [group:{{ supervisor_group_name }}]
-programs=celery-worker-{{ django_hostname }},celery-beat-{{ django_hostname }},uwsgi-{{ django_hostname }}
+programs=celery-worker-{{ django_hostname }},celery-beat-{{ django_hostname }},uwsgi-{{ django_hostname }},listen-cachequeue-{{ django_hostname }}
