@@ -23,6 +23,11 @@
     # dla zbudowania pozniej psycopg2
     - build-essential
     - libpq-dev
+
+- name: Start service, if not started
+  service:
+    name: postgresql
+    state: started
     
 - name: Create PostgreSQL user
   postgresql_user: name={{ database_user }} password={{ database_password }} role_attr_flags=CREATEDB,SUPERUSER state=present port={{ postgresql_port }}
