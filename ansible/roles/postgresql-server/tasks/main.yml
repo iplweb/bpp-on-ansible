@@ -19,6 +19,7 @@
 
     # na potrzeby Ansible
     - python-psycopg2
+    - python3-psycopg2
 
     # dla zbudowania pozniej psycopg2
     - build-essential

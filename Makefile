@@ -16,7 +16,7 @@ staging-update: # "szybka" ścieżka aktualizacji
 pristine-staging:
 	vagrant pristine -f staging
 
-rebuild-staging: bdist_wheel pristine-staging staging
+rebuild-staging: pristine-staging staging
 
 demo-vm-ansible: 
 	ansible-playbook ansible/demo-vm.yml --private-key=.vagrant/machines/staging/virtualbox/private_key
@@ -60,7 +60,7 @@ docker-shell:
 	docker exec -it systemd-ubuntu /bin/bash
 
 docker-test-on-docker:
-	docker exec -it systemd-ubuntu ansible-playbook -vvv --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
 
 docker-down:
 	docker stop systemd-ubuntu

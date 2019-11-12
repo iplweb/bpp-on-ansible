@@ -2,6 +2,11 @@
 - name: Install apt packages
   apt: name=rabbitmq-server state=present
 
+- name: Enable RabbitMQ service
+  service:
+    name: rabbitmq-server
+    state: started
+
 - name: Add RabbitMQ Vhost
   rabbitmq_vhost: name="{{ rabbitmq_vhost }}" state=present
 
