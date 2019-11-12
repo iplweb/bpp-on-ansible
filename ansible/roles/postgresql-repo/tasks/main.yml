@@ -1,9 +1,9 @@
 ---
-- name: Add PostgreSQL 9.6 repository
+- name: Add PostgreSQL repository
   apt_repository:
     repo: deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main
 
-- name: Add PostgreSQL 9.6 repository key
+- name: Add PostgreSQL repository key
   apt_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
