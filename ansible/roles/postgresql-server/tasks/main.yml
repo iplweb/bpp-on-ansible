@@ -1,12 +1,24 @@
+- name: Add PostgreSQL repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ubuntu_codename }}-pgdg main
+    update_cache: no
+
+- name: Add PostgreSQL repository key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+- name: Update apt cache
+  apt:  update_cache=yes
+
 - name: Install apt packages and PostgreSQL version {{ postgresql_version }}
   apt: name={{ item }} state=present
   with_items: 
     - postgresql-{{ postgresql_version }}
     - postgresql-plpython3-{{ postgresql_version }}
-    - postgresql-plpython-{{ postgresql_version }}    
     - postgresql-contrib-{{ postgresql_version }}
-    - python-psycopg2 # na potrzeby ansible
-    - python3-psycopg2 # na potrzeby ansible
+
+    # na potrzeby Ansible
+    - python-psycopg2
 
     # dla zbudowania pozniej psycopg2
     - build-essential
