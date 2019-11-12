@@ -16,7 +16,7 @@ staging-update: # "szybka" ścieżka aktualizacji
 pristine-staging:
 	vagrant pristine -f staging
 
-rebuild-staging: bdist_wheel pristine-staging staging
+rebuild-staging: pristine-staging staging
 
 demo-vm-ansible: 
 	ansible-playbook ansible/demo-vm.yml --private-key=.vagrant/machines/staging/virtualbox/private_key
@@ -49,3 +49,21 @@ production:
 
 production-update: # "szybka" ścieżka aktualizacji
 	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml -t django-site ${ANSIBLE_OPTIONS}
+
+docker-build:
+	docker build . -t mpasternak79/bpp-on-ansible:18.04
+
+docker-up:
+	docker run -d --name systemd-ubuntu --privileged -v `pwd`:/app -v /sys/fs/cgroup:/sys/fs/cgroup:ro mpasternak79/bpp-on-ansible:18.04
+
+docker-shell:
+	docker exec -it systemd-ubuntu /bin/bash
+
+docker-test-on-docker:
+	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+
+docker-down:
+	docker stop systemd-ubuntu
+	docker rm systemd-ubuntu
+
+test-on-docker: docker-build docker-up docker-test-on-docker docker-down

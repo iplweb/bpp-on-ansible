@@ -5,7 +5,6 @@
   roles:
     - locale
     - nginx-with-pubsub
-    - postgresql-repo
     - postgresql-server
     - rabbitmq-server
     - redis-server

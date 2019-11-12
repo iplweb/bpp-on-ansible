@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
    end
 
   config.vm.define "staging" do |staging|
-      staging.vm.box = "ubuntu/xenial64"
+      staging.vm.box = "ubuntu/bionic64"
       staging.vm.box_check_update = false
 
       staging.vm.provider "virtualbox" do |vb|
@@ -40,12 +40,16 @@ Vagrant.configure(2) do |config|
       staging.vm.provision "shell", inline: "sudo swapon /swapfile"
       staging.vm.provision "shell", inline: "echo swapon /swapfile | sudo tee /etc/rc.local"      
       staging.vm.provision "shell", inline: "sudo apt update"      
-      staging.vm.provision "shell", inline: "sudo apt install python-minimal emacs24-nox -y"
+      staging.vm.provision "shell", inline: "sudo apt install python-minimal -y"
 
       if Vagrant.has_plugin?("vagrant-cachier")
         staging.cache.scope = :box
         staging.cache.enable :apt
         staging.cache.enable :npm
+
+        config.cache.synced_folder_opts = {
+          owner: "_apt",
+        }
       end
 
   end
