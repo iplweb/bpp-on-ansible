@@ -1,4 +1,6 @@
 # bpp-on-ansible
+![TravisCI odznaka](https://travis-ci.org/iplweb/bpp-on-ansible.svg?branch=develop)
+
 Skrypty Ansible konfigurujące serwery do uruchamiania BPP na serwerach "bare metal".
 
 Na ten moment dostępna jest kongfiguracja uruchamiająca i testująca wszystko przez Vagranta.
