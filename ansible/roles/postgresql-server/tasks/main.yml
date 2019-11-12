@@ -2,16 +2,22 @@
   apt: name={{ item }} state=present
   with_items: 
     - postgresql-{{ postgresql_version }}
-    - postgresql-plpython-{{ postgresql_version }}
+    - postgresql-plpython3-{{ postgresql_version }}
+    - postgresql-plpython-{{ postgresql_version }}    
     - postgresql-contrib-{{ postgresql_version }}
-    - python-psycopg2
+    - python-psycopg2 # na potrzeby ansible
+    - python3-psycopg2 # na potrzeby ansible
 
+    # dla zbudowania pozniej psycopg2
+    - build-essential
+    - libpq-dev
+    
 - name: Create PostgreSQL user
-  postgresql_user: name={{ database_user }} password={{ database_password }} role_attr_flags=CREATEDB,SUPERUSER state=present
+  postgresql_user: name={{ database_user }} password={{ database_password }} role_attr_flags=CREATEDB,SUPERUSER state=present port={{ postgresql_port }}
   become_user: postgres
 
 - name: CreatePostgreSQL database  
-  postgresql_db: name={{ database_name }} 
+  postgresql_db: name={{ database_name }} port={{ postgresql_port }}
   args: 
     owner: "{{ database_user }}"
     state: present 
@@ -22,7 +28,7 @@
   become_user: postgres
   
 - name: Create PostgreSQL plpython language
-  postgresql_lang: db={{ database_name }} lang=plpythonu state=present
+  postgresql_lang: db={{ database_name }} lang=plpython3u state=present port={{ postgresql_port }}
   become_user: postgres
 
 - name: Create PostgreSQL collation for pl_PL

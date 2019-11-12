@@ -1,15 +1,15 @@
 ---
-- hosts: webservers
+- hosts: all
   become: yes
   become_method: sudo
   roles:
     - locale
     - nginx-with-pubsub
-    - postgresql-9.6-repo
+    - postgresql-repo
     - postgresql-server
     - rabbitmq-server
     - redis-server
-    - python36-xenial
+    - python-xenial
     - name: django-site
       tags: ['django-site']
 
