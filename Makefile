@@ -57,7 +57,7 @@ docker-up:
 	docker run -d --name systemd-ubuntu --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro mpasternak79/bpp-on-ansible:18.04
 
 docker-test-on-docker:
-	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+	docker exec -it systemd-ubuntu ansible-playbook -vvv --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
 
 docker-down:
 	docker stop systemd-ubuntu
