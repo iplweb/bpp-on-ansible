@@ -1,4 +1,4 @@
-upstream app_server {
+upstream app_server_{{ django_user }} {
     server unix://{{ django_home_dir }}/uwsgi.sock;
     # server 127.0.0.1:{{ django_gunicorn_port }} fail_timeout=0;
 }
@@ -60,7 +60,7 @@ server {
       proxy_redirect off;
 
       include       uwsgi_params;
-      uwsgi_pass    app_server;
+      uwsgi_pass    app_server_{{ django_user }};
    }
 
   location /admin {
@@ -68,7 +68,7 @@ server {
       rewrite (.*) https://$server_name:{{ django_nginx_https_port }}$request_uri? permanent;
     }
     include       uwsgi_params;
-    uwsgi_pass    app_server;
+    uwsgi_pass    app_server_{{ django_user }};
   }
 
   location /accounts {
@@ -76,7 +76,7 @@ server {
       rewrite (.*) https://$server_name:{{ django_nginx_https_port }}$request_uri? permanent;
     }
     include       uwsgi_params;
-    uwsgi_pass    app_server;
+    uwsgi_pass    app_server_{{ django_user }};
   }
 
   location /media {

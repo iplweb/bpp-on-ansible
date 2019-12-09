@@ -1,6 +1,6 @@
 ---
 # 16.04
-# nginx_package: 1.14.1-0+xenial0+pushstream1
+# nginx_version: 1.14.1-0+xenial0+pushstream1
 
 # 18.04
 nginx_version: 1.14.1-0+bionic0+pushstream1
