@@ -3,4 +3,4 @@
   locale_gen: name={{ locale }} state=present
 
 - name: Ustaw locale {{locale}} jako defaultowe
-  command: update-locale LANG={{ locale }}                                 
+  command: update-locale LC_ALL={{ locale }} LANG={{ locale}}

@@ -57,7 +57,7 @@
 
 - name: Check for unexpected error message (if any)
   fail: msg="Nieoczekiwany błąd podczas tworzenia collation"
-  when: (psql_coll_err.stderr != "" and psql_coll_err.stderr.find("już istnieje") < 0)
+  when: (psql_coll_err.stderr != "" and (psql_coll_err.stderr.find("już istnieje") < 0 and psql_coll_err.stderr.find("already exists") < 0))
 
 - name: Create PostgreSQL collation for pl_PL
   shell: psql -c "CREATE COLLATION \"pl_PL.utf8\"(locale='pl_PL.utf8');" "{{ database_name }}"
@@ -67,7 +67,7 @@
 
 - name: Check for unexpected error message (if any)
   fail: msg="Nieoczekiwany błąd podczas tworzenia collation"
-  when: (psql_coll_err_2.stderr != "" and psql_coll_err_2.stderr.find("już istnieje") < 0)
+  when: (psql_coll_err_2.stderr != "" and (psql_coll_err_2.stderr.find("już istnieje") < 0 and psql_coll_err_2.stderr.find("already exists") < 0))
 
 - name: Update unaccent.txt file
   file: src=unaccent-rules.txt dest=/usr/share/postgresql/{{ postgresql_version }}/tsearch_data/unaccent.rules
