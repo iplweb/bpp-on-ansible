@@ -1,5 +1,5 @@
 # bpp-on-ansible
-![TravisCI odznaka](https://travis-ci.org/iplweb/bpp-on-ansible.svg?branch=develop)
+[![TravisCI odznaka](https://travis-ci.org/iplweb/bpp-on-ansible.svg?branch=develop)](https://travis-ci.org/iplweb/bpp-on-ansible/)
 
 Skrypty Ansible konfigurujące serwery do uruchamiania BPP na serwerach "bare metal".
 
