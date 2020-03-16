@@ -18,20 +18,24 @@
 
 - name: Virtualenv is created
   command: virtualenv --python=python{{ django_python_version }} {{ django_venv_dir }}
+  become: yes
   become_user: "{{ django_user }}"
   args:
     creates: "{{ django_venv_dir }}"
 
 - name: Virtualenv wrapper for execution of scripts is created
   template: src=vexec dest={{ django_home_dir }}/vexec mode=755
+  become: yes  
   become_user: "{{ django_user }}"
 
 - name: Pip is upgraded in virtualenv
   command: "{{ django_home_dir }}/vexec pip install --upgrade pip"
+  become: yes
   become_user: "{{ django_user }}"
 
 - name: Wheel is installed in virtual environment
   pip: virtualenv={{ django_venv_dir }} name=wheel
+  become: yes
   become_user: "{{ django_user }}"
 
 - include: config.yml
@@ -40,7 +44,8 @@
 - name: BPP package is installed
   command: "{{ django_home_dir }}/vexec pip install --pre --upgrade bpp-iplweb"
   # Ponizsze bylo uzywane przy instalacji z prywatnego repo
-  # --extra-index-url http://dev.iplweb.pl:8080/ --trusted-host dev.iplweb.pl 
+  # --extra-index-url http://dev.iplweb.pl:8080/ --trusted-host dev.iplweb.pl
+  become: yes
   become_user: "{{ django_user }}"
   tags: ['django-depends']
 
