@@ -17,6 +17,11 @@ server {
   access_log  	/var/log/nginx/{{ django_hostname }}-access.log;
   error_log    	/var/log/nginx/{{ django_hostname }}-error.log;
 
+  ## Deny illegal Host headers
+  if ($host !~* ^({{ django_hostname }}|www.{{ django_hostname }})$ ) {
+      return 444;
+  }
+
   error_page 497 https://$host:{{ django_nginx_https_port }}$request_uri;
 
   location /static {
