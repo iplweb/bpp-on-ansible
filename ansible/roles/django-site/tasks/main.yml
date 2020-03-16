@@ -48,6 +48,9 @@
   become: yes
   become_user: "{{ django_user }}"
   tags: ['django-depends']
+  environment:
+    LANG: pl_PL.UTF-8
+    LC_ALL: pl_PL.UTF-8
 
 - name: Database is migrated
   command: "{{ django_manage_py }} migrate --noinput"
