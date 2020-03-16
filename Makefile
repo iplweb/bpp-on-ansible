@@ -62,6 +62,9 @@ docker-shell:
 docker-test-on-docker:
 	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
 
+docker-debug:
+	docker exec -it systemd-ubuntu ansible-playbook -t django-site --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+
 docker-down:
 	docker stop systemd-ubuntu
 	docker rm systemd-ubuntu
