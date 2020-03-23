@@ -58,6 +58,7 @@ command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/uwsgi
     --disable-logging
     --chmod-socket=666
     --die-on-term
+    --disable-write-exception
     -b 65535
 stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/uwsgi-stdout
 stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/uwsgi-stderr
