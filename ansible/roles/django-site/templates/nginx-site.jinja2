@@ -1,5 +1,5 @@
 upstream app_server_{{ django_user }} {
-    server unix://{{ django_home_dir }}/uwsgi.sock;
+    server unix://{{ django_home_dir }}/uwsgi.sock fail_timeout=0;
     # server 127.0.0.1:{{ django_gunicorn_port }} fail_timeout=0;
 }
 
@@ -11,7 +11,12 @@ server {
 }
 
 server {
-  listen        {{ django_nginx_http_port }} {% if django_set_as_default_http_in_nginx %}default{% endif %};
+  server_name  {{ django_hostname }};
+  listen        {{ django_nginx_http_port }};
+  return 301 https://{{ django_hostname }}$request_uri;
+}
+
+server {
   listen        {{ django_nginx_https_port }} {%  if django_set_as_default_https_in_nginx %}default{% endif %} ssl;
   server_name 	{{ django_hostname }} {{ django_hostname_aliases|default("") }};
   access_log  	/var/log/nginx/{{ django_hostname }}-access.log;
