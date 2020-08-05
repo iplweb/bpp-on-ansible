@@ -34,3 +34,5 @@ django_set_as_default_http_in_nginx: true
 django_password_duration_seconds: 315360000
 django_password_use_history: 1
 django_password_history_count: 1
+
+ansible_python_interpreter: /usr/bin/python3

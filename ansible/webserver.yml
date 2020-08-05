@@ -4,8 +4,8 @@
   become_method: sudo
   roles:
     - locale
-    - nginx
     - postgresql-server
+    - nginx
     - rabbitmq-server
     - redis-server
     - python

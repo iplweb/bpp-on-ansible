@@ -18,22 +18,27 @@
     - { src: nginx-site.jinja2, dest: "/etc/nginx/sites-available/{{ django_hostname }}" }
     - { src: nginx-maint-site.jinja2, dest: "/etc/nginx/sites-available/{{ django_hostname }}-maint" }
   register: nginx_conf
+  tags: ['nginx-conf',]
 
 - name: Check nginx configuration file
   shell: nginx -t
   when: nginx_conf.changed
+  tags: ['nginx-conf',]
 
 - name: Enable nginx normal site
   shell: /usr/bin/nginx_ensite {{ django_hostname }}
   when: nginx_conf.changed
+  tags: ['nginx-conf',]
 
 - name: Disable nginx maint site
   shell: /usr/bin/nginx_dissite {{ django_hostname }}-maint
   register: nginx_config_maint_site
   ignore_errors: yes
   when: nginx_conf.changed
+  tags: ['nginx-conf',]
 
 - name: reload nginx conf
   service: name=nginx state=reloaded
   when: nginx_conf.changed
+  tags: ['nginx-conf',]
 

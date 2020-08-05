@@ -1,7 +1,4 @@
 ---
-#- name: Add Python Deadsnakes PPA
-#  apt_repository: repo="ppa:deadsnakes" state="present"
-
 - name: Update apt cache
   apt:  update_cache=yes
 
