@@ -89,6 +89,6 @@
 
 - name: Restart supervisor if different number of running procs
   shell: ls
-  notify: supervisor restart group
+  notify: supervisor restart all
   when: supervisor_processess_running.stdout|int != supervisor_no_processess
   tags: ['supervisor',]
