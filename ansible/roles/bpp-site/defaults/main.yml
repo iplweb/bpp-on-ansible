@@ -28,7 +28,7 @@ rabbitmq_user: "{{ database_user }}"
 rabbitmq_vhost: "{{ django_hostname }}"
 rabbitmq_password: "rabbit-{{ rabbitmq_user }}"
 
-django_gunicorn_port: 9999
+django_appserver_port: 9999
 
 django_nginx_http_port: 80
 django_nginx_https_port: 443

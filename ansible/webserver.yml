@@ -4,13 +4,12 @@
   become_method: sudo
   roles:
     - locale
-    - nginx-with-pubsub
+    - nginx
     - postgresql-server
     - rabbitmq-server
     - redis-server
     - python
-    - name: django-site
-      tags: ['django-site']
+    - bpp-site
 
   tasks: 
     - name: RabbitMQ config jest dodany do {{ django_venv_dir }}/bin/activate

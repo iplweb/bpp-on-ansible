@@ -3,7 +3,7 @@
   apt:  update_cache=yes
 
 - name: Install nginx
-  apt: name="nginx={{ nginx_version }}" state="present"
+  apt: name=nginx state="present"
 
 - name: Install scripts for nginx_ensite
   copy: src=nginx_ensite dest=/usr/bin/nginx_ensite mode=755

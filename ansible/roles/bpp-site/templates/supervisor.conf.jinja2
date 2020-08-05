@@ -39,29 +39,18 @@ stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostn
 stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/celery-beat-stderr
 directory={{ django_home_dir }}
 
-[program:uwsgi-{{ django_hostname }}]
+[fcgi-program:appserver-{{ django_hostname }}]
 user={{ django_user }}
 autostart=true
 autorestart=true
 environment=USER="{{ django_user }}"
 directory={{ django_home_dir }}
-command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/uwsgi
-    --chdir={{ django_home_dir }}
-    --module=django_bpp.wsgi
-    --master
-    --pidfile={{ django_home_dir }}/uwsgi.pid
-    --socket={{ django_home_dir }}/uwsgi.sock
-    --processes={{ ansible_processor_cores }}
-    --uid={{ django_user }} --gid={{ django_user }}
-    --harakiri=30
-    --max-requests=40960
-    --disable-logging
-    --chmod-socket=666
-    --die-on-term
-    --disable-write-exception
-    -b 65535
-stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/uwsgi-stdout
-stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/uwsgi-stderr
+socket=tcp://localhost:{{ django_appserver_port }}
+numprocs=4
+process_name=uvicorn-%(process_num)d
+command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/uvicorn django_bpp.asgi:application
+stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/appserver-stdout
+stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/appserver-stderr
 
 
 [group:{{ supervisor_group_name }}]
