@@ -11,4 +11,3 @@ swoisty krok w tył - więc po co? Ano po to, żeby móc weryfikować konfigurac
 czy CircleCI, które Vagranta nie obsługują.
 
 Osoby zainteresowane uruchomieniem BPP w kontenerach dockera zapraszamy do repo `bpp-on-docker`. 
-
