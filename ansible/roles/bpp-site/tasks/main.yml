@@ -10,11 +10,13 @@
 - name: Basic django requirements are installed
   apt: name={{ item }}
   with_items:
-    - python-virtualenv
+    - python3-virtualenv
     - python{{django_python_version}}-dev
     - zip # jest wymagany
     - pandoc
     - memcached
+    - libmemcached-dev
+
 
 - name: Virtualenv is created
   command: virtualenv --python=python{{ django_python_version }} {{ django_venv_dir }}
@@ -87,6 +89,6 @@
 
 - name: Restart supervisor if different number of running procs
   shell: ls
-  notify: supervisor restart group
+  notify: supervisor restart all
   when: supervisor_processess_running.stdout|int != supervisor_no_processess
   tags: ['supervisor',]

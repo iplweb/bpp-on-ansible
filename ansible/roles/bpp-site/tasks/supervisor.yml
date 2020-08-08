@@ -8,6 +8,9 @@
 - name: Supervisord config file is installed
   template: src=supervisor.conf.jinja2 dest=/etc/supervisor/conf.d/{{ django_project_name }}-{{ django_hostname }}.conf
   register: supervisor_config
+  tags: ['supervisor-conf',]
+  notify:
+    - restart supervisor
 
 - name: Supervisor is restarted when config changed
   shell: service supervisor stop && sleep 5 && service supervisor start

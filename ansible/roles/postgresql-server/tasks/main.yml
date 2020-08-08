@@ -1,12 +1,3 @@
-- name: Add PostgreSQL repository
-  apt_repository:
-    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ubuntu_codename }}-pgdg main
-    update_cache: no
-
-- name: Add PostgreSQL repository key
-  apt_key:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-
 - name: Update apt cache
   apt:  update_cache=yes
 
@@ -16,14 +7,10 @@
     - postgresql-{{ postgresql_version }}
     - postgresql-plpython3-{{ postgresql_version }}
     - postgresql-contrib-{{ postgresql_version }}
-
-    # na potrzeby Ansible
-    - python-psycopg2
-    - python3-psycopg2
-
-    # dla zbudowania pozniej psycopg2
     - build-essential
+    - python3-psycopg2
     - libpq-dev
+    - acl
 
 - name: Start service, if not started
   service:
@@ -32,9 +19,11 @@
     
 - name: Create PostgreSQL user
   postgresql_user: name={{ database_user }} password={{ database_password }} role_attr_flags=CREATEDB,SUPERUSER state=present port={{ postgresql_port }}
+  become: yes
   become_user: postgres
+  become_method: sudo
 
-- name: CreatePostgreSQL database  
+- name: CreatePostgreSQL database
   postgresql_db: name={{ database_name }} port={{ postgresql_port }}
   args: 
     owner: "{{ database_user }}"

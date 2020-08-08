@@ -1,0 +1,18 @@
+- name: stop django site processes
+  shell: supervisorctl stop "{{ django_site_project_name }}-{{ django_site_hostname }}:*"
+  ignore_errors: yes
+
+- name: supervisor restart group
+  shell: supervisorctl restart {{ supervisor_group_name }}:*
+
+- name: supervisor restart
+  service: name=supervisor state=restarted
+
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: supervisor restart all
+  shell: supervisorctl restart all
+
+- name: restart rabbitmq-server
+  service: name=rabbitmq-server state=restarted

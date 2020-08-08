@@ -70,3 +70,6 @@ docker-down:
 	docker rm systemd-ubuntu
 
 test-on-docker: docker-build docker-up docker-test-on-docker docker-down
+
+install-vagrant-plugins:
+	vagrant plugin install vagrant-timezone vagrant-hostmanager vagrant-cachier vagrant-pristine

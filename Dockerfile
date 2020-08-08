@@ -1,4 +1,4 @@
-FROM jrei/systemd-ubuntu:18.04
+FROM jrei/systemd-ubuntu:20.04
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales sudo python3-pip libssl-dev 
 

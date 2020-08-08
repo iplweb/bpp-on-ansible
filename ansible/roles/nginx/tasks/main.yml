@@ -1,0 +1,19 @@
+---
+- name: Update apt cache
+  apt:  update_cache=yes
+
+- name: Install nginx
+  apt: name=nginx state="present"
+
+- name: Install scripts for nginx_ensite
+  copy: src=nginx_ensite dest=/usr/bin/nginx_ensite mode=755
+  tags: ['nginx_ensite',]
+
+- name: Install symlink for nginx_dissite
+  file: src=/usr/bin/nginx_ensite dest=/usr/bin/nginx_dissite state=link
+
+- name: Enable nginx service
+  service: name=nginx state=started enabled=yes
+
+- name: Really enable nginx service
+  shell: systemctl enable nginx.service
