@@ -24,10 +24,6 @@ django_set_as_default_https_in_nginx: true
 django_db_port: "{{ postgresql_port }}"
 postgresql_version: 10
 
-rabbitmq_user: "{{ database_user }}"
-rabbitmq_vhost: "{{ django_hostname }}"
-rabbitmq_password: "rabbit-{{ rabbitmq_user }}"
-
 django_appserver_port: 9999
 
 django_nginx_http_port: 80
@@ -35,8 +31,6 @@ django_nginx_https_port: 443
 
 django_nginx_push_stream_allowed_ips:
   - 127.0.0.1
-
-celery_broker_url: "amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost:5672/{{ rabbitmq_vhost }}"
 
 certs_path: "{{ role_path }}/files/"
 

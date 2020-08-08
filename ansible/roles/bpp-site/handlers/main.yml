@@ -14,5 +14,3 @@
 - name: supervisor restart all
   shell: supervisorctl restart all
 
-- name: restart rabbitmq-server
-  service: name=rabbitmq-server state=restarted
