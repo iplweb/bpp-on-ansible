@@ -48,7 +48,7 @@ production:
 	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml ${ANSIBLE_OPTIONS}
 
 production-update: # "szybka" ścieżka aktualizacji
-	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml -t django-site ${ANSIBLE_OPTIONS}
+	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml -t bpp-site ${ANSIBLE_OPTIONS}
 
 docker-build:
 	docker build . -t mpasternak79/bpp-on-ansible:18.04

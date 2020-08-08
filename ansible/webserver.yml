@@ -8,4 +8,5 @@
     - nginx
     - redis-server
     - python
-    - bpp-site
+    - name: bpp-site
+      tags: ['bpp-site',]
