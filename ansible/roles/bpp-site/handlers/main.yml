@@ -8,6 +8,9 @@
 - name: supervisor restart
   service: name=supervisor state=restarted
 
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
 - name: supervisor restart all
   shell: supervisorctl restart all
 
