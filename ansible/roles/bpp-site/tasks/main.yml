@@ -14,9 +14,6 @@
     - python{{django_python_version}}-dev
     - zip # jest wymagany
     - pandoc
-    - memcached
-    - libmemcached-dev
-
 
 - name: Virtualenv is created
   command: virtualenv --python=python{{ django_python_version }} {{ django_venv_dir }}
