@@ -46,8 +46,8 @@ autorestart=true
 environment=USER="{{ django_user }}"
 directory={{ django_home_dir }}
 socket=tcp://localhost:{{ django_appserver_port }}
-numprocs={{ ansible_processor_vcpus }}
+numprocs={{ ansible_processor_cores }}
 process_name=uvicorn-%(process_num)d
-command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/uvicorn --fd 0 django_bpp.asgi:application
+command={{ django_home_dir }}/vexec {{ django_venv_dir }}/bin/uvicorn --fd 0 --limit-max-requests 2048 django_bpp.asgi:application
 stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/appserver-stdout
 stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/appserver-stderr
