@@ -59,4 +59,4 @@
   when: (psql_coll_err_2.stderr != "" and (psql_coll_err_2.stderr.find("już istnieje") < 0 and psql_coll_err_2.stderr.find("already exists") < 0))
 
 - name: Update unaccent.txt file
-  file: src=unaccent-rules.txt dest=/usr/share/postgresql/{{ postgresql_version }}/tsearch_data/unaccent.rules
+  copy: src=unaccent-rules.txt dest=/usr/share/postgresql/{{ postgresql_version }}/tsearch_data/unaccent.rules
