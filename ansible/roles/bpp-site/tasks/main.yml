@@ -32,10 +32,10 @@
   become: yes
   become_user: "{{ django_user }}"
 
-- name: Wheel is installed in virtual environment
-  pip: virtualenv={{ django_venv_dir }} name=wheel
-  become: yes
-  become_user: "{{ django_user }}"
+#- name: Wheel is installed in virtual environment
+#  pip: virtualenv={{ django_venv_dir }} name=wheel
+#  become: yes
+#  become_user: "{{ django_user }}"
 
 - include: config.yml
   tags: ['config']
