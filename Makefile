@@ -43,12 +43,20 @@ vagrantup:
 
 demo-vm: vagrantclean vagrantup staging demo-vm-ansible demo-vm-clone demo-vm-cleanup
 
-# cel: production -DCUSTOMER=... or CUSTOMER=... make production
-production: 
-	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml ${ANSIBLE_OPTIONS}
+INVENTORY_PATH?="/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg"
 
-production-update: # "szybka" ścieżka aktualizacji
-	ansible-playbook -i "/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg" ansible/webserver.yml -t bpp-site ${ANSIBLE_OPTIONS}
+# cel: production -DCUSTOMER=... or CUSTOMER=... make production
+fresh-install:
+    # Instalowane jest wszystko, z certyfikatami SSL i konfiguracją serwera WWW włącznie
+	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml ${ANSIBLE_OPTIONS}
+
+install:
+    # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
+	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+
+update:
+    # "szybka" ścieżka aktualizacji - tylko serwis BPP
+	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
 
 docker-build:
 	docker build . -t mpasternak79/bpp-on-ansible:18.04

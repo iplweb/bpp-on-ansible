@@ -6,7 +6,7 @@
   with_items: ['cert', 'key']
   notify:
     - reload nginx conf
-  tags: ['certs']
+  tags: ['ssl-certificate']
 
 - name: Disable deafult site if variable set
   file: state=absent path=/etc/nginx/sites-enabled/default
@@ -18,27 +18,27 @@
     - { src: nginx-site.jinja2, dest: "/etc/nginx/sites-available/{{ django_hostname }}" }
     - { src: nginx-maint-site.jinja2, dest: "/etc/nginx/sites-available/{{ django_hostname }}-maint" }
   register: nginx_conf
-  tags: ['nginx-conf',]
+  tags: ['nginx-config-file',]
 
 - name: Check nginx configuration file
   shell: nginx -t
   when: nginx_conf.changed
-  tags: ['nginx-conf',]
+  tags: ['nginx-config-file',]
 
 - name: Enable nginx normal site
   shell: /usr/bin/nginx_ensite {{ django_hostname }}
   when: nginx_conf.changed
-  tags: ['nginx-conf',]
+  tags: ['nginx-config-file',]
 
 - name: Disable nginx maint site
   shell: /usr/bin/nginx_dissite {{ django_hostname }}-maint
   register: nginx_config_maint_site
   ignore_errors: yes
   when: nginx_conf.changed
-  tags: ['nginx-conf',]
+  tags: ['nginx-config-file',]
 
 - name: reload nginx conf
   service: name=nginx state=reloaded
   when: nginx_conf.changed
-  tags: ['nginx-conf',]
+  tags: ['nginx-config-file',]
 
