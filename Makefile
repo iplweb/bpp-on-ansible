@@ -63,19 +63,16 @@ update:
 	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
 
 docker-build:
-	docker build . -t mpasternak79/bpp-on-ansible:18.04
+	docker build . -t mpasternak79/bpp-on-ansible:20.04
 
 docker-up:
-	docker run -d --name systemd-ubuntu --privileged -v `pwd`:/app -v /sys/fs/cgroup:/sys/fs/cgroup:ro mpasternak79/bpp-on-ansible:18.04
+	docker run -d --name systemd-ubuntu --privileged -v `pwd`:/app -v /sys/fs/cgroup:/sys/fs/cgroup:ro mpasternak79/bpp-on-ansible:20.04
 
 docker-shell:
 	docker exec -it systemd-ubuntu /bin/bash
 
 docker-test-on-docker:
-	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
-
-docker-debug:
-	docker exec -it systemd-ubuntu ansible-playbook -t django-site --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 --skip-tags=django-check-email /app/ansible/webserver.yml
 
 docker-down:
 	docker stop systemd-ubuntu
