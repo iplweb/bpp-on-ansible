@@ -82,3 +82,8 @@
   notify: supervisor restart all
   when: supervisor_processess_running.stdout|int != supervisor_no_processess
   tags: ['supervisor',]
+
+- name: Check if the installed site can send mails
+  command: "{{ django_manage_py }} check_email"
+  tags: ['django-check-email']
+
