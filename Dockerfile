@@ -1,6 +1,6 @@
 FROM jrei/systemd-ubuntu:20.04
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales sudo python3-pip libssl-dev 
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales sudo python3-pip libssl-dev exim4
 
 RUN sed -i -e 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
