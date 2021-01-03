@@ -2,6 +2,10 @@
 BPP_PACKAGE_VERSION=1.0.26.1
 BPP_PACKAGE=bpp-iplweb==$(BPP_PACKAGE_VERSION)
 
+configure-vagrantfile:
+	rm -f Vagrantfile
+	ln -s Vagrantfile.`uname -m` Vagrantfile
+
 staging: staging-up staging-ansible
 
 staging-up: 
