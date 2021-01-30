@@ -1,10 +1,8 @@
 # BPP_PACKAGE_VERSION=`yolk -V bpp-iplweb|head|sed s/bpp-iplweb\ //`
-BPP_PACKAGE_VERSION=1.0.26.1
+BPP_PACKAGE_VERSION=202101.54
 BPP_PACKAGE=bpp-iplweb==$(BPP_PACKAGE_VERSION)
 
-configure-vagrantfile:
-	rm -f Vagrantfile
-	ln -s Vagrantfile.`uname -m` Vagrantfile
+uname_m := $(shell uname -m)
 
 staging: staging-up staging-ansible
 
@@ -82,3 +80,6 @@ test-on-docker: docker-build docker-up docker-test-on-docker docker-down
 
 install-vagrant-plugins:
 	vagrant plugin install vagrant-timezone vagrant-hostmanager vagrant-cachier vagrant-pristine
+ifeq ($(uname_m),arm64)	
+	vagrant plugin install vagrant-parallels
+endif
