@@ -53,3 +53,9 @@ django_bpp_inline_dla_autorow: stacked
 
 supervisor_group_name: "{{ django_project_name }}_{{ django_hostname }}"
 supervisor_no_processess: 3
+
+django_bpp_redis_db_broker: 1
+django_bpp_redis_db_celery: 2
+django_bpp_redis_db_session: 4
+django_bpp_redis_db_cache: 5
+django_bpp_redis_db_locks: 6
