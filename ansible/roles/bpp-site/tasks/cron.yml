@@ -15,5 +15,5 @@
   become_user: "{{ django_user }}"
 
 - name: Pobieranie danych z PBNu raz na dobę
-  cron: name="Integruj rekordy z PBNem raz dziennie" minute="30" hour="1" job="{{ django_manage_py }} pbn_integrator"
+  cron: name="Integruj rekordy z PBNem raz dziennie" minute="30" hour="1" job="{{ django_manage_py }} pbn_integrator --enable-all"
   become_user: "{{ django_user }}"
