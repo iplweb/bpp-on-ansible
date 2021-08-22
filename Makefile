@@ -56,6 +56,10 @@ install:
     # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
 	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
 
+install-umwtest:
+    # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
+	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml --skip-tags=ssl-certificate ${ANSIBLE_OPTIONS}
+
 update:
     # "szybka" ścieżka aktualizacji - tylko serwis BPP
 	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}

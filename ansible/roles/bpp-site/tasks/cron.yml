@@ -14,11 +14,11 @@
   cron: name="Przebuduj kolejnosc rekordow raz dziennie" minute="30" hour="3" job="{{ django_manage_py }} rebuild_kolejnosc"
   become_user: "{{ django_user }}"
 
-- name: Wysyłanie danych do PBNu raz na dobę o 1:30
-  cron: name="Integruj rekordy z PBNem raz dziennie" minute="30" hour="1" job="{{ django_manage_py }} pbn_integrator --enable-sync"
-  become_user: "{{ django_user }}"
+#- name: Wysyłanie danych do PBNu raz na dobę o 1:30
+#  cron: name="Integruj rekordy z PBNem raz dziennie" minute="30" hour="1" job="{{ django_manage_py }} pbn_integrator --enable-sync"
+#  become_user: "{{ django_user }}"
 
-- name: Pobieranie danych z PBNu raz na tydzień w sobotę o 21:30
-  cron: name="Integruj rekordy z PBNem raz dziennie" weekday="6" minute="30" hour="21" job="{{ django_manage_py }} pbn_integrator --enable-all --disable-multiprocessing"
+- name: Pobieranie danych z PBNu raz na dobę o 21:30
+  cron: name="Integruj rekordy z PBNem raz dziennie" minute="30" hour="21" job="{{ django_manage_py }} pbn_integrator --enable-all --disable-multiprocessing"
   become_user: "{{ django_user }}"
   
