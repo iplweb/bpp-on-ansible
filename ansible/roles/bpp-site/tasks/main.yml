@@ -41,7 +41,7 @@
   tags: ['config']
 
 - name: BPP package is installed
-  command: "{{ django_home_dir }}/vexec pip install --upgrade bpp-iplweb"
+  command: "{{ django_home_dir }}/vexec pip install --upgrade --pre bpp-iplweb"
   # Ponizsze bylo uzywane przy instalacji z prywatnego repo
   # --extra-index-url http://dev.iplweb.pl:8080/ --trusted-host dev.iplweb.pl
   become: yes
