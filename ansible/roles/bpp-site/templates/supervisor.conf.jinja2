@@ -13,15 +13,16 @@ stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostn
 stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/celery-worker-stderr
 directory={{ django_home_dir }}
 
-[program:listen-cachequeue-{{ django_hostname }}]
-command={{ django_home_dir }}/vexec bpp-manage.py listen_cachequeue
+[program:denorm-queue-{{ django_hostname }}]
+command={{ django_home_dir }}/vexec bpp-manage.py denorm_queue
 user={{ django_user }}
 autostart=true
 autorestart=true
-numprocs=1
+numprocs={{ ansible_processor_nproc }}
+process_name=denorm-queue-%(process_num)d
 environment=USER="{{ django_user }}"
-stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/listen-cachequeue-stdout
-stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/listen-cachequeue-stderr
+stdout_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/denorm-queue-stdout
+stderr_logfile={{ supervisor_logdir }}/{{ django_project_name }}/{{ django_hostname }}/denorm-queue-stderr
 directory={{ django_home_dir }}
 
 [program:celery-beat-{{ django_hostname }}]

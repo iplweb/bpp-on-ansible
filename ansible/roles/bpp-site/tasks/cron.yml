@@ -3,7 +3,7 @@
   cron: name="Restartuj procesy supervisord raz dziennie" minute="30" hour="23" job="supervisorctl restart all > /dev/null"
 
 - name: Przebudowa cache bazy danych raz dziennie
-  cron: name="Przebuduj cache bazy danych raz dziennie" minute="30" hour="22" job="{{ django_manage_py }} rebuild_cache"
+  cron: name="Przebuduj cache bazy danych raz dziennie" minute="30" hour="22" job="{{ django_manage_py }} denorm_rebuild --no-flush"
   become_user: "{{ django_user }}"
 
 - name: Przebudowa sitemaps raz dziennie
