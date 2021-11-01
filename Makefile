@@ -83,7 +83,7 @@ docker-down:
 test-on-docker: docker-build docker-up docker-test-on-docker docker-down
 
 install-vagrant-plugins:
-	vagrant plugin install vagrant-timezone vagrant-hostmanager vagrant-cachier vagrant-pristine
+	vagrant plugin install vagrant-timezone vagrant-hostmanager vagrant-pristine
 ifeq ($(uname_m),arm64)	
 	vagrant plugin install vagrant-parallels
 endif

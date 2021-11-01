@@ -4,7 +4,6 @@
 
 # Wymagane pluginy:
 #  * vagrant-hostmanager
-#  * vagrant-cachier
 
 
 Vagrant.configure(2) do |config|
@@ -58,6 +57,7 @@ Vagrant.configure(2) do |config|
       staging.vm.provision "shell", inline: "sudo apt install python emacs-nox -y"
 
       if Vagrant.has_plugin?("vagrant-cachier")
+        # Ten plugin nie jest zarządzany od jakiegoś czasu
         staging.cache.scope = :box
         staging.cache.enable :apt
         staging.cache.enable :npm
