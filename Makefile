@@ -4,16 +4,23 @@ BPP_PACKAGE=bpp-iplweb==$(BPP_PACKAGE_VERSION)
 
 uname_m := $(shell uname -m)
 
+PRIVATE_KEY=--private-key=.vagrant/machines/staging/virtualbox/private_key
+
+ifeq ($(uname_m),arm64)	
+PRIVATE_KEY=--private-key=.vagrant/machines/staging/parallels/private_key
+endif
+
+
 staging: staging-up staging-ansible
 
 staging-up: 
 	vagrant up
 
 staging-ansible:
-	ansible-playbook ansible/webserver.yml --private-key=.vagrant/machines/staging/virtualbox/private_key
+	ansible-playbook ansible/webserver.yml $(PRIVATE_KEY)
 
 staging-update: # "szybka" ścieżka aktualizacji
-	ansible-playbook ansible/webserver.yml -t django-site --private-key=.vagrant/machines/staging/virtualbox/private_key
+	ansible-playbook ansible/webserver.yml -t django-site $(PRIVATE_KEY)
 
 pristine-staging:
 	vagrant pristine -f staging
@@ -21,7 +28,7 @@ pristine-staging:
 rebuild-staging: pristine-staging staging
 
 demo-vm-ansible: 
-	ansible-playbook ansible/demo-vm.yml --private-key=.vagrant/machines/staging/virtualbox/private_key
+	ansible-playbook ansible/demo-vm.yml $(PRIVATE_KEY)
 
 # cel: demo-vm-clone
 # Tworzy klon Vagrantowego boxa "staging" celem stworzenia pliku OVA

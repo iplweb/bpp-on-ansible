@@ -20,7 +20,8 @@ Vagrant.configure(2) do |config|
       staging.vm.box_check_update = false
 
       staging.vm.provider "parallels" do |v, override|
-        override.vm.box = "mpasternak/focal64-arm"
+        # override.vm.box = "rueian/ubuntu20-m1"
+        override.vm.box = "mpasternak/focal64-arm"        
       end
 
       config.vm.provider "parallels" do |prl|
