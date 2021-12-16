@@ -17,10 +17,10 @@ staging-up:
 	vagrant up
 
 staging-ansible:
-	ansible-playbook ansible/webserver.yml $(PRIVATE_KEY)
+	ansible-playbook ansible/bpp-cluster.yml $(PRIVATE_KEY)
 
 staging-update: # "szybka" ścieżka aktualizacji
-	ansible-playbook ansible/webserver.yml -t django-site $(PRIVATE_KEY)
+	ansible-playbook ansible/bpp-cluster.yml -t django-site $(PRIVATE_KEY)
 
 pristine-staging:
 	vagrant pristine -f staging
@@ -57,19 +57,23 @@ INVENTORY_PATH?="/Volumes/Dane zaszyfrowane/${CUSTOMER}/ansible/hosts.cfg"
 # cel: production -DCUSTOMER=... or CUSTOMER=... make production
 fresh-install:
     # Instalowane jest wszystko, z certyfikatami SSL i konfiguracją serwera WWW włącznie
-	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml ${ANSIBLE_OPTIONS}
+	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml ${ANSIBLE_OPTIONS}
 
 install:
     # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
-	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+
+cert-install:
+    # Instalowane są wyłącznie certyfikaty SSL
+	ansible-playbook -i ${INVENTORY_PATH} -t ssl-certificate ansible/bpp-cluster.yml ${ANSIBLE_OPTIONS}
 
 install-umwtest:
     # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
-	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml --skip-tags=ssl-certificate ${ANSIBLE_OPTIONS}
+	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml --skip-tags=ssl-certificate ${ANSIBLE_OPTIONS}
 
 update:
     # "szybka" ścieżka aktualizacji - tylko serwis BPP
-	ansible-playbook -i ${INVENTORY_PATH} ansible/webserver.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
 
 docker-build:
 	docker build . -t mpasternak79/bpp-on-ansible:20.04
@@ -81,7 +85,7 @@ docker-shell:
 	docker exec -it systemd-ubuntu /bin/bash
 
 docker-test-on-docker:
-	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 --skip-tags=django-check-email /app/ansible/webserver.yml
+	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 --skip-tags=django-check-email /app/ansible/bpp-cluster.yml
 
 docker-down:
 	docker stop systemd-ubuntu

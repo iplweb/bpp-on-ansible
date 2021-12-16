@@ -1,3 +1,15 @@
+- name: "{{ django_venv_dir }}/bin/activate script contains proper environment variables -- no lookup bug, https://github.com/ansible/ansible/issues/16776"
+  lineinfile:
+    dest={{ django_venv_dir }}/bin/activate 
+    line="export {{ django_envvar_prefix }}_DB_PASSWORD=\"{{ django_db_password }}\""
+  no_log: True
+
+- name: "{{ django_venv_dir }}/bin/activate script contains proper environment variables -- no lookup bug, https://github.com/ansible/ansible/issues/16776"
+  lineinfile:
+    dest={{ django_venv_dir }}/bin/activate 
+    line="export PGPASSWORD=\"{{ django_db_password}}\""
+  no_log: True
+
 - name: "{{ django_venv_dir }}/bin/activate script contains proper environment variables"
   lineinfile: dest={{ django_venv_dir }}/bin/activate line="{{ item }}"
   no_log: True
@@ -6,7 +18,6 @@
     - export {{ django_envvar_prefix }}_SECRET_KEY="{{ django_secret_key }}"
     - export {{ django_envvar_prefix }}_DB_NAME="{{ django_db_name }}"
     - export {{ django_envvar_prefix }}_DB_USER="{{ django_db_user }}"
-    - export {{ django_envvar_prefix }}_DB_PASSWORD="{{ django_db_password }}"
     - export {{ django_envvar_prefix }}_DB_HOST="{{ django_db_host }}"
     - export {{ django_envvar_prefix }}_DB_PORT="{{ django_db_port }}"
     - export {{ django_envvar_prefix }}_NOTIFICATIONS_HOST="{{ django_notifications_host }}"
@@ -29,7 +40,6 @@
     - export {{ django_envvar_prefix }}_REDIS_DB_LOCKS="{{ django_bpp_redis_db_locks }}"
     - export PGDATABASE="{{ django_db_name}}"
     - export PGUSER="{{ django_db_user}}"
-    - export PGPASSWORD="{{ django_db_password}}"
     - export PGHOST="{{ django_db_host }}"
     - export PGPORT="{{ django_db_port}}"
     - export DJANGO_SETTINGS_MODULE="{{ django_settings_module }}"

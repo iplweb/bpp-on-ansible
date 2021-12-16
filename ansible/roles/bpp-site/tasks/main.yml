@@ -1,3 +1,19 @@
+- name: Update apt cache
+  apt:  update_cache=yes
+
+- name: Install apt packages and PostgreSQL version {{ postgresql_version }}
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - python3-psycopg2
+    - postgresql-common
+    - postgresql-client-{{ postgresql_version }}
+    - libpq-dev
+    - acl
+
+- include: postgresql.yml
+  tags: ['database']
+
 - name: Group for django site is present
   group: name={{ django_group }}
 
@@ -32,13 +48,17 @@
   become: yes
   become_user: "{{ django_user }}"
 
-#- name: Wheel is installed in virtual environment
-#  pip: virtualenv={{ django_venv_dir }} name=wheel
-#  become: yes
-#  become_user: "{{ django_user }}"
-
 - include: config.yml
   tags: ['config']
+
+- name: "Extra Python packages are installed (XXX WORKAROUND -- remove when possible)"
+  command: "{{django_home_dir}}/vexec pip install {{item}}"
+  become: yes
+  become_user: "{{ django_user }}"
+  with_items:
+    - git+git://github.com/carltongibson/django-filter.git@512310fe880af675f33be964d85907db838f62ea
+    - git+git://github.com/jazzband/django-dbtemplates.git@ac86ca5ec97c47016146b4c3d7b3f0c77ce4f614
+    - "uvicorn[standard]"
 
 - name: BPP package is installed
   command: "{{ django_home_dir }}/vexec pip install --upgrade --pre bpp-iplweb"
@@ -52,10 +72,14 @@
     LC_ALL: pl_PL.UTF-8
 
 - name: Database is migrated
+  become: yes
+  become_user: "{{ django_user }}"
   command: "{{ django_manage_py }} migrate --noinput"
   tags: ['django-migrate']
 
 - name: Site name for sites framework is set up
+  become: yes
+  become_user: "{{ django_user }}"
   command: "{{ django_manage_py }} set_site_name --domain \"{{ django_hostname }}\" --name \"{{ django_site_name }}\""
 
 - include: supervisor.yml
@@ -85,5 +109,6 @@
 
 - name: Check if the installed site can send mails
   command: "{{ django_manage_py }} check_email"
+  ignore_errors: yes
   tags: ['django-check-email']
 

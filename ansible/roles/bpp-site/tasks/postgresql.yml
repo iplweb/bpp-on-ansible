@@ -1,0 +1,71 @@
+---
+- name: Create PostgreSQL user
+  postgresql_user:
+    name={{ database_user }} 
+    password="{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}" 
+    role_attr_flags=CREATEDB,SUPERUSER 
+    state=present 
+
+    login_host={{ postgresql_host }} 
+    login_password="{{ postgresql_password }}"    
+    login_port={{ postgresql_port }}
+
+- name: CreatePostgreSQL database
+  postgresql_db:
+    name={{ database_name }}
+    
+    login_host={{ postgresql_host }}
+    login_user={{ database_user }}
+    login_password="{{ database_password }}"    
+    login_port={{ postgresql_port }}
+
+  args:
+    owner: "{{ database_user }}"
+    state: present
+    encoding: UTF-8
+    lc_collate: pl_PL.UTF-8
+    lc_ctype: pl_PL.UTF-8
+    template: template0
+
+- name: Create PostgreSQL plpython language
+  postgresql_lang:
+    db={{ database_name }} 
+    lang=plpython3u 
+    state=present
+    
+    login_host={{ postgresql_host }}
+    login_user={{ database_user }}
+    login_password="{{ database_password }}"    
+    login_port={{ postgresql_port }}
+
+- name: Create PostgreSQL collation for pl_PL
+  postgresql_query:
+    db: "{{database_name}}"
+    query: CREATE COLLATION pl_PL(locale='pl_PL.utf8');
+
+    login_host: "{{ postgresql_host }}"
+    login_user: "{{ database_user }}"
+    login_password: "{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}"
+    login_port: "{{ postgresql_port }}"
+  ignore_errors: yes
+  register: psql_coll_err
+
+- name: Check for unexpected error message (if any)
+  fail: msg="Nieoczekiwany błąd podczas tworzenia collation"
+  when: (psql_coll_err['msg'] != "" and (psql_coll_err['msg'].find("już istnieje") < 0 and psql_coll_err['msg'].find("already exists") < 0))
+
+- name: Create PostgreSQL collation for pl_PL
+  postgresql_query:
+    db: "{{database_name}}"
+    query: CREATE COLLATION pl_PL(locale='pl_PL.utf8');
+
+    login_host: "{{ postgresql_host }}"
+    login_user: "{{ database_user }}"
+    login_password: "{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}"
+    login_port: "{{ postgresql_port }}"
+  ignore_errors: yes
+  register: psql_coll_err_2
+
+- name: Check for unexpected error message (if any)
+  fail: msg="Nieoczekiwany błąd podczas tworzenia collation"
+  when: (psql_coll_err_2['msg'] != "" and (psql_coll_err_2['msg'].find("już istnieje") < 0 and psql_coll_err_2['msg'].find("already exists") < 0))

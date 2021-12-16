@@ -1,11 +1,20 @@
 ---
 - hosts:
-    - webservers
+    - bpp-dbserver
   become: yes
   become_method: sudo
   roles:
     - locale
     - postgresql-server
+    # - TODO: remote access cfg
+    # - TODO: pgtune
+
+- hosts:
+    - bpp-webserver
+  become: yes
+  become_method: sudo
+  roles:
+    - locale
     - nginx
     - redis-server
     - python
