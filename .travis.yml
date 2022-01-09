@@ -2,6 +2,7 @@ services:
   - docker
 
 script:
+  - docker login --help
   - echo “$DOCKER_PASSWORD” | docker login -u “$DOCKER_USERNAME” password-stdin registry.example.com || true
   - make test-on-docker
   
