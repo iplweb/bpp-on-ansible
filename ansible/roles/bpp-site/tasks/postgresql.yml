@@ -6,6 +6,7 @@
     role_attr_flags=CREATEDB,SUPERUSER 
     state=present 
 
+    login_user={{ postgresql_user }}
     login_host={{ postgresql_host }} 
     login_password="{{ postgresql_password }}"    
     login_port={{ postgresql_port }}
@@ -16,8 +17,8 @@
     
     login_host={{ postgresql_host }}
     login_user={{ database_user }}
-    login_password="{{ database_password }}"    
-    login_port={{ postgresql_port }}
+    login_password="{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}"
+    login_port="{{ postgresql_port }}"
 
   args:
     owner: "{{ database_user }}"
@@ -35,7 +36,7 @@
     
     login_host={{ postgresql_host }}
     login_user={{ database_user }}
-    login_password="{{ database_password }}"    
+    login_password="{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}"
     login_port={{ postgresql_port }}
 
 - name: Create PostgreSQL collation for pl_PL
