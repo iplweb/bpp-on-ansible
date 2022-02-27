@@ -67,13 +67,18 @@ cert-install:
     # Instalowane są wyłącznie certyfikaty SSL
 	ansible-playbook -i ${INVENTORY_PATH} -t ssl-certificate ansible/bpp-cluster.yml ${ANSIBLE_OPTIONS}
 
+# Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
 install-umwtest:
-    # Instalowane jest wszystko oprócz konfigracji Nginx i certyfikatów SSL
 	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml --skip-tags=ssl-certificate ${ANSIBLE_OPTIONS}
 
+# "Szybka" ścieżka aktualizacji - tylko serwis BPP
 update:
-    # "szybka" ścieżka aktualizacji - tylko serwis BPP
 	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml -t bpp-site --skip-tags=ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+
+# Tylko certyfikaty SSL i konfiguracja NGINX -- przy zmianie nazwy domeny
+hostname-change:
+	ansible-playbook -i ${INVENTORY_PATH} ansible/bpp-cluster.yml -t ssl-certificate,nginx-config-file ${ANSIBLE_OPTIONS}
+
 
 docker-build:
 	docker build . -t mpasternak79/bpp-on-ansible:20.04

@@ -57,6 +57,9 @@ Vagrant.configure(2) do |config|
       staging.vm.provision "shell", inline: "sudo apt update"      
       staging.vm.provision "shell", inline: "sudo apt install python emacs-nox -y"
 
+      staging.ssh.forward_agent = true
+      staging.ssh.forward_x11 = true
+
       if Vagrant.has_plugin?("vagrant-cachier")
         # Ten plugin nie jest zarządzany od jakiegoś czasu
         staging.cache.scope = :box
