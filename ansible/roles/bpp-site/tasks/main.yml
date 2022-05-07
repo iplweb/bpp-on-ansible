@@ -56,15 +56,6 @@
 - include: config.yml
   tags: ['config']
 
-- name: "Extra Python packages are installed (XXX WORKAROUND -- remove when possible)"
-  command: "{{django_home_dir}}/vexec pip install {{item}}"
-  become: yes
-  become_user: "{{ django_user }}"
-  with_items:
-    - git+git://github.com/carltongibson/django-filter.git@512310fe880af675f33be964d85907db838f62ea
-    - git+git://github.com/jazzband/django-dbtemplates.git@ac86ca5ec97c47016146b4c3d7b3f0c77ce4f614
-    - "uvicorn[standard]"
-
 - name: BPP package is installed
   command: "{{ django_home_dir }}/vexec pip install --upgrade --pre bpp-iplweb"
   # Ponizsze bylo uzywane przy instalacji z prywatnego repo
