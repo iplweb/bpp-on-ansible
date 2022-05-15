@@ -104,7 +104,7 @@
   tags: ['supervisor',]
 
 - name: Check if the installed site can send mails
-  command: "{{ django_manage_py }} check_email"
+  command: "{{ django_manage_py }} sendtestemail --admin"
   ignore_errors: yes
-  tags: ['django-check-email']
+  tags: ['sendtestemail']
 
