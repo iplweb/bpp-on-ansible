@@ -10,6 +10,9 @@ ifeq ($(uname_m),arm64)
 PRIVATE_KEY=--private-key=.vagrant/machines/staging/parallels/private_key
 endif
 
+setup-ansible:
+	ansible-galaxy collection install community.general
+	ansible-galaxy collection install community.postgresql
 
 staging: staging-up staging-ansible
 

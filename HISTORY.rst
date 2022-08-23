@@ -1,3 +1,15 @@
+2022-08-23
+----------
+
+* Python 3.10, Celery 5.x, 
+* Python z deadsnakes PPA,
+* przejście na GitHub Actions,
+  
+2022-07-10
+----------
+
+* aktualizacja plików do ansible 2.10.6
+  
 2022-07-05
 ----------
 
