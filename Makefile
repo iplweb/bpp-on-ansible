@@ -93,7 +93,7 @@ docker-shell:
 	docker exec -it systemd-ubuntu /bin/bash
 
 docker-test-on-docker:
-	docker exec -it systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 --skip-tags=django-check-email /app/ansible/bpp-cluster.yml
+	docker exec systemd-ubuntu ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 --skip-tags=django-check-email /app/ansible/bpp-cluster.yml
 
 docker-down:
 	docker stop systemd-ubuntu
