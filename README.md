@@ -1,5 +1,6 @@
 # bpp-on-ansible
-[![TravisCI odznaka](https://travis-ci.org/iplweb/bpp-on-ansible.svg?branch=develop)](https://travis-ci.org/iplweb/bpp-on-ansible/)
+
+[![bpp-on-ansible test on Docker](https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml/badge.svg)](https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml)
 
 Skrypty Ansible konfigurujące serwery do uruchamiania BPP na serwerach "bare metal".
 
