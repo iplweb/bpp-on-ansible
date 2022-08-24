@@ -10,5 +10,4 @@ ENV LANG pl_PL.UTF-8
 
 RUN pip3 install ansible
 
-# COPY . /app
-# RUN ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 /app/ansible/webserver.yml
+COPY ansible_inventory_docker /
