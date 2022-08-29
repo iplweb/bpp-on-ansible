@@ -11,7 +11,7 @@
 
 - name: hold until Postgresql is up and running
   wait_for:
-    host 127.0.0.1
+    host: 127.0.0.1
     port: 5432
 
 - name: Set random password for PostgreSQL user
