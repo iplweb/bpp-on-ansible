@@ -9,6 +9,11 @@
     - postgresql-contrib-{{ postgresql_version }}
     - python3-psycopg2 # dla Ansible, bez tego zarządzanie nie pójdzie.
 
+- name: hold until Postgresql is up and running
+  wait_for:
+    host 127.0.0.1
+    port: 5432
+
 - name: Set random password for PostgreSQL user
   become: yes
   become_method: sudo
