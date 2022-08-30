@@ -1,8 +1,8 @@
 ---
-- name: Add deadsnakes PPA
-  ansible.builtin.apt_repository:
-    repo: 'ppa:deadsnakes/ppa'
-    state: present
+#- name: Add deadsnakes PPA
+#  ansible.builtin.apt_repository:
+#    repo: 'ppa:deadsnakes/ppa'
+#    state: present
     
 - name: Update apt cache
   apt:  update_cache=yes
