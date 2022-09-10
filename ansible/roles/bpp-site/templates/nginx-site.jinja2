@@ -16,6 +16,8 @@ server {
 }
 
 server {
+  client_max_body_size 75M; #  maksymalny rozmiar uploadowanego pliku
+
   listen        {{ django_nginx_https_port }} {%  if django_set_as_default_https_in_nginx %}default{% endif %} ssl;
   server_name 	{{ django_hostname }} {{ django_hostname_aliases|default("") }};
   access_log  	/var/log/nginx/{{ django_hostname }}-access.log;
