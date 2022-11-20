@@ -1,3 +1,10 @@
+2022-11-20
+----------
+
+* instrukcja instalacji
+* Ubuntu 22.04, PostgreSQL 14
+* GitHub Actions
+
 2022-08-23
 ----------
 
