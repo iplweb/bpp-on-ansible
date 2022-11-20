@@ -37,6 +37,11 @@
 - name: User for django site is present
   user: name={{ django_user  }} createhome=yes shell=/bin/bash
 
+- name: chmod 755 for user home dir, nginx static files needs it
+  ansible.builtin.file:
+    path: "{{ django_home_dir }}"
+    mode: "0755"
+
 - name: Media dir for django site is present
   file: path={{ django_media_root }} state=directory owner={{ django_user }} mode=0755
 
@@ -120,4 +125,6 @@
   command: "{{ django_manage_py }} sendtestemail --admin"
   ignore_errors: yes
   tags: ['sendtestemail']
+  become: yes
+  become_user: "{{ django_user }}"
 
