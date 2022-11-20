@@ -56,7 +56,7 @@ Vagrant.configure(2) do |config|
       staging.vm.provision "shell", inline: "sudo swapon /swapfile"
       staging.vm.provision "shell", inline: "echo swapon /swapfile | sudo tee /etc/rc.local"      
       staging.vm.provision "shell", inline: "sudo apt update"      
-      staging.vm.provision "shell", inline: "sudo apt install python3 emacs-nox -y"
+      staging.vm.provision "shell", inline: "sudo apt install python3 -y"
 
       staging.ssh.forward_agent = true
       staging.ssh.forward_x11 = true
