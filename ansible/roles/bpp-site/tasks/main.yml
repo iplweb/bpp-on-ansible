@@ -25,6 +25,9 @@
       - libldap2-dev
       - libssl-dev
 
+      # Ech. 
+      - emacs-nox
+
 - include: postgresql.yml
   tags: ['database']
 
@@ -61,19 +64,18 @@
   command: "{{ django_home_dir }}/vexec pip install --upgrade pip"
   become: yes
   become_user: "{{ django_user }}"
+  tags: ['pip']
 
 - include: config.yml
   tags: ['config']
 
-- name: BPP package is installed
+- name: Instalacja pakietu BPP (to może chwilę potrwać...)
   command: "{{ django_home_dir }}/vexec pip install --upgrade --pre bpp-iplweb"
-
   # Ponizsze bylo uzywane przy instalacji z prywatnego repo
   # --extra-index-url http://dev.iplweb.pl:8080/ --trusted-host dev.iplweb.pl
-
   become: yes
   become_user: "{{ django_user }}"
-  tags: ['django-depends']
+  tags: ['django-depends', pip]
   environment:
     LANG: pl_PL.UTF-8
     LC_ALL: pl_PL.UTF-8
