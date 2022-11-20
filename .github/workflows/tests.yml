@@ -27,26 +27,8 @@ jobs:
     - name: Show Vagrant version
       run: vagrant --version
 
-    - name: Install vagrant-hostmanager plugin
-      run: vagrant plugin install vagrant-hostmanager
-      
-    - name: Run vagrant up
-      run: vagrant up
-
     - name: Install Ansible
       run: pip install ansible
 
-    - name: ssh into box after boot
-      run: vagrant ssh -c "echo 'hello world!'"
-      
-    - name: debug3
-      run: find ~/.ssh
-      
-    - name: debug2
-      run: find .vagrant
-
-    - name: debug5
-      run: cat /etc/hosts
-      
-    - name: Ansible it
-      run: make staging-ansible
+    - name: Run vagrant up
+      run: vagrant up
