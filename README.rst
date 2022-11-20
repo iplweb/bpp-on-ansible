@@ -108,7 +108,8 @@ Aby zainstalować BPP:
 #. Po instalacji systemu zostanie utworzone konto użytkownika (domyślnie ``bpp``). Konfiguracja systemu
    znajdzie się w pliku ``.env`` znajdującym się w domowym katalogu użytkownika ``bpp`` czyli w ``/home/bpp/.env``. 
    Domyślną konfigurację systemu po utworzeniu jej przez Ansible można próbować wzbogacić korzystając 
-   z przykładowych ustawień, które można znaleźć w repozytorium kodu - plik `.env.example`_
+   z przykładowych ustawień, które można znaleźć w repozytorium kodu - plik `.env.example`_ , warto 
+   również obejrzeć odpowiednią sekcję w pliku `settings/base.py`_
 
 #. Na lokalnym komputerze (zwanym w terminologii Ansible kontrolerem) zostanie utworzony katalog 
    ``ansible/credentials`` gdzie znajdą się zapisane wartości haseł do systemu - hasło do bazy danych
@@ -140,3 +141,4 @@ nie są przeprowadzane żadne automatyczne testy przy użyciu Dockera.
 .. _Ubuntu Linux Server: https://ubuntu.com/download/server
 .. _Anaconda: https://www.anaconda.com/products/distribution
 .. _.env.example: https://github.com/iplweb/bpp/blob/dev/.env.example
+.. _settings/base.py: https://github.com/iplweb/bpp/blob/dev/src/django_bpp/settings/base.py
