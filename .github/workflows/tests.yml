@@ -18,7 +18,7 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: 3.10 # ${{ matrix.python-version }}
+        python-version: "3.10" # ${{ matrix.python-version }}
 
     - name: Cache Vagrant boxes
       uses: actions/cache@v2
