@@ -2,12 +2,12 @@
   apt:  update_cache=yes
 
 - name: Install apt packages and PostgreSQL version {{ postgresql_version }}
-  apt: name={{ item }} state=present
-  with_items: 
-    - postgresql-{{ postgresql_version }}
-    - postgresql-plpython3-{{ postgresql_version }}
-    - postgresql-contrib-{{ postgresql_version }}
-    - python3-psycopg2 # dla Ansible, bez tego zarządzanie nie pójdzie.
+  ansible.builtin.apt:
+    pkg:
+      - postgresql-{{ postgresql_version }}
+      - postgresql-plpython3-{{ postgresql_version }}
+      - postgresql-contrib-{{ postgresql_version }}
+      - python3-psycopg2 # dla Ansible, bez tego zarządzanie nie pójdzie.
 
 - name: Start service, if not started
   service:
@@ -19,14 +19,14 @@
     host: 127.0.0.1
     port: 5432
 
-- name: Set random password for PostgreSQL user
+- name: Set password for PostgreSQL user
   become: yes
   become_method: sudo
   become_user: postgres
   postgresql_user:
     db: template1
     name: postgres
-    password: "{{ lookup('password', 'credentials/' + ansible_host + '/postgresql_system_password length=25') }}"
+    password: "{{ postgresql_password }}"
 
 - name: Update unaccent.txt file
   copy: src=unaccent-rules.txt dest=/usr/share/postgresql/{{ postgresql_version }}/tsearch_data/unaccent.rules

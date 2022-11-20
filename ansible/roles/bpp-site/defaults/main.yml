@@ -1,14 +1,25 @@
 ---
-postgresql_user: postgres
-postgresql_port: 5432
-postgresql_version: 12
-postgresql_password: "{{ lookup('password', 'credentials/' + postgresql_host + '/postgresql_system_password length=25') }}"
 
-database_password: "{{ lookup('password', 'credentials/' + ansible_host + '/' + database_user + '/' + '/database_password length=25') }}"
+django_user: bpp
+django_project_name: django_bpp
+django_hostname: "{{ inventory_hostname }}"
+
+django_settings_module: django_bpp.settings.production
+
+database_user: "{{ django_user }}"
+database_name: "{{ django_user }}"
+database_host: "{{ postgresql_host }}"
+database_password: "{{ lookup('password', 'credentials/' + inventory_hostname + '/' + database_user + '/' + '/database_password length=25') }}"
+
+django_secret_key: "{{ lookup('password', 'credentials/' + inventory_hostname + '/' + django_user + '/' + django_project_name + '/' + '/django_secret_key length=512') }}"
+
+
+django_group: "{{ django_user }}"
 
 supervisor_logdir: /var/log/supervisor
 
 django_home_dir: /home/{{ django_user }}
+django_envfile: "{{ django_home_dir }}/.env"
 
 django_media_root: /home/{{ django_user }}/media
 

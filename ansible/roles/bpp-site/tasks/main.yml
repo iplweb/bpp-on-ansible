@@ -1,27 +1,29 @@
+- include_vars: ../../postgresql-server/defaults/main.yml
+
 - name: Update apt cache
   apt:  update_cache=yes
 
 - name: Install apt packages and PostgreSQL version {{ postgresql_version }}
-  apt: name={{ item }} state=present
-  with_items:
-    - build-essential
-    - python3-psycopg2
-    - postgresql-common
-    - postgresql-client-{{ postgresql_version }}
-    - libpq-dev
-    - acl
-    
-    # Poniższe potrzebne jest, zeby generowanie PDFów przez WeasyPrint
-    # ładnie chodziło. WeasyPrint wymaga paru bibliotek, które wczytuje
-    # przez bodajże cdll, stąd, żeby się nie wysypywał. Rzecz jasna,
-    # na ubuntu 20.04, bo w kolejnych wersjach może być różnie... 
-    - pango1.0-tests
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - python3-psycopg2
+      - postgresql-common
+      - postgresql-client-{{ postgresql_version }}
+      - libpq-dev
+      - acl
+      
+      # Poniższe potrzebne jest, zeby generowanie PDFów przez WeasyPrint
+      # ładnie chodziło. WeasyPrint wymaga paru bibliotek, które wczytuje
+      # przez bodajże cdll, stąd, żeby się nie wysypywał. Rzecz jasna,
+      # na ubuntu 20.04, bo w kolejnych wersjach może być różnie... 
+      - pango1.0-tests
 
-    # Poniższe potrzebne są, żeby można było zbudować python-ldap
-    - libsasl2-dev
-    - python3-dev
-    - libldap2-dev
-    - libssl-dev
+      # Poniższe potrzebne są, żeby można było zbudować python-ldap
+      - libsasl2-dev
+      - python3-dev
+      - libldap2-dev
+      - libssl-dev
 
 - include: postgresql.yml
   tags: ['database']
@@ -30,18 +32,18 @@
   group: name={{ django_group }}
 
 - name: User for django site is present
-  user: name={{ django_user  }} createhome=yes
+  user: name={{ django_user  }} createhome=yes shell=/bin/bash
 
 - name: Media dir for django site is present
   file: path={{ django_media_root }} state=directory owner={{ django_user }} mode=0755
 
 - name: Basic django requirements are installed
-  apt: name={{ item }}
-  with_items:
-    - python3-virtualenv
-    - python{{django_python_version}}-dev
-    - zip # jest wymagany
-    - pandoc
+  ansible.builtin.apt:
+    pkg:
+      - python3-virtualenv
+      - python{{django_python_version}}-dev
+      - zip # jest wymagany
+      - pandoc
 
 - name: Virtualenv is created
   command: virtualenv --python=python{{ django_python_version }} {{ django_venv_dir }}
@@ -65,8 +67,10 @@
 
 - name: BPP package is installed
   command: "{{ django_home_dir }}/vexec pip install --upgrade --pre bpp-iplweb"
+
   # Ponizsze bylo uzywane przy instalacji z prywatnego repo
   # --extra-index-url http://dev.iplweb.pl:8080/ --trusted-host dev.iplweb.pl
+
   become: yes
   become_user: "{{ django_user }}"
   tags: ['django-depends']
