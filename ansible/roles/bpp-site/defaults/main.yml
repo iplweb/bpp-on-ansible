@@ -44,7 +44,7 @@ django_appserver_port: 9999
 django_nginx_http_port: 80
 django_nginx_https_port: 443
 
-certs_path: "{{ role_path }}/files/"
+ssl_certs_path: "{{ role_path }}/files"
 
 django_uzywaj_punktacji_wewnetrznej: 1
 

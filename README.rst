@@ -30,20 +30,33 @@ Aby zainstalować BPP:
 #. Potrzebujemy na serwerze systemu operacyjnego `Ubuntu Linux Server`_ w ostatniej
    wersji LTS, czyli w chwili pisania tej dokumentacji ``22.04-LTS``. 
 
-#. Potrzebujemy certyfikatu SSL dla tego serwera. Od pewnego czasu nieszyfrowane połączenia
+#. Potrzebujemy certyfikat SSL dla tego serwera. Od pewnego czasu nieszyfrowane połączenia
    po protokole HTTP są delikatnie mówiąc wypierane, stąd warto postarać się o certyfikat. 
-   W przeciwnym wypadku zostanie zainstalowany domyślny i przestarzały. Ansible
-   domyślnie szuka certyfikatów w katalogu ``ansible/roles/bpp-site/files/nazwa.serwera`` czyli
-   dla naszej domyślnej domeny będzie to  ``ansible/roles/bpp-site/files/example.iplweb.pl.key``
-   oraz  ``ansible/roles/bpp-site/files/example.iplweb.pl.cert``
+   BPP domyślnie przekierowuje zapytania HTTP na HTTPS. Pliki certyfikatów muszą być nazwane
+   jak nasza domena, powinny być dwa, jeden powinien mieć rozszerzenie ``.cert`` a drugi 
+   ``.key``. Skopiuj te pliki do katalogu z którego uruchamiasz ``ansible-playbook`` (patrz niżej)
 
 #. W dalszej części tej instrukcji zakładamy, że logowanie na użytkownika ``root``
    ma miejsce bez hasła tzn przy wykorzystaniu publicznego klucza SSH użytkownika, 
-   który instaluje system. 
+   który instaluje system. Jeżeli chcesz szybko skopiować swój klucz SSH na serwer, 
+   użyj polecenia ``ssh-copy-id(1)``:
 
-#. Lokalnie potrzebujemy Pythona z wirtualnym środowiskiem. Jeżeli działasz pod Linux
-   lub macOS to wszystko powinno być na miejscu, a jeżeli działasz na Windows, to dużo
-   dobrego słyszałem o dystrybucji `Anaconda`_
+   .. code-block: shell
+
+      $ ssh-copy-id root@example.iplweb.pl
+
+#. Lokalnie potrzebujemy Pythona z wirtualnym środowiskiem, żeby uruchomić Ansible. 
+   Jeżeli działasz pod Linux lub macOS to wszystko powinno być na miejscu, a jeżeli 
+   działasz na Windows, to dużo dobrego słyszałem o dystrybucji `Anaconda`_
+
+#. Lokalnie potrzebujemy skopiować zawartość tego repozytorium do jakiegoś katalogu. 
+   Potrzebny będzie zatem ``git(1)``:
+
+   .. code-block: shell
+
+      $ git clone https://github.com/iplweb/bpp-on-ansible/
+
+   To polecenie utworzy katalog ``bpp-on-ansible``.
 
 #. Gdy mamy już nasze lokalne wirtualne środowisko Pythona, instalujemy ``ansible`` 
    za pomocą polecenia:
@@ -77,16 +90,19 @@ Aby zainstalować BPP:
       tutaj byłby to katalog ``host_vars/example.iplweb.pl``. W przeciwnym wypadku ta pierwsza linia z pliku
       konfiguracyjnego może nam się zacząć wydłużać w nieskończoność...
 
-#. Uruchamiamy instalację systemu BPP:
+#. Uruchamiamy instalację systemu BPP. Poniższe polecenie zakłada, ze w katalogu, z którego je 
+   uruchamiamy znajdują się pliki certyfikatów SSL:
 
    .. code-block:: shell
 
-      ansible-playbook -i hosts.cfg ansible/bpp-cluster.yml
+      ansible-playbook -i hosts.cfg -e ssl_certs_path=`pwd` ansible/bpp-cluster.yml
 
 #. Po instalacji systemu zostanie utworzone konto użytkownika (domyślnie ``bpp``). Konfiguracja systemu
    znajdzie się w pliku ``.env`` znajdującym się w domowym katalogu użytkownika ``bpp``. Domyślną konfigurację
    systemu można próbować wzbogacić korzystając z przykładowych ustawień, które można znaleźć w 
    repozytorium kodu - plik `.env.example`_
+
+#. System powinien być dostępny pod adresem serwera czyli ``https://example.iplweb.pl/``
 
 
 Testowanie tego repozytorium

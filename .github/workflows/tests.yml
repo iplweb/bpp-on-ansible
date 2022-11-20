@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: macos-10.15
 
-    strategy:
-      matrix:
-        python-version: ['3.10']
+#    strategy:
+#      matrix:
+#        python-version: ['3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -18,8 +18,7 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
-        
+        python-version: 3.10 # ${{ matrix.python-version }}
 
     - name: Cache Vagrant boxes
       uses: actions/cache@v2
@@ -38,6 +37,9 @@ jobs:
     - name: Run vagrant up
       run: vagrant up
 
-    - name: ssh into box after boot
-      run: vagrant ssh -c "echo 'hello world!'"
+    - name: Ansible it
+      run: make staging-ansible
+
+#    - name: ssh into box after boot
+#      run: vagrant ssh -c "echo 'hello world!'"
 
