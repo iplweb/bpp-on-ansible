@@ -1,4 +1,4 @@
-name: Tst vagrant build
+name: Test build on Vagrant
 
 on:
   - push
