@@ -1,23 +1,35 @@
 bpp-on-ansible
 ==============
 
-|bpp-on-ansible test on Docker|
+|Status testów|
 
-Skrypty Ansible konfigurujące serwery do uruchamiania BPP na serwerach
-“bare metal”.
+Repozytorium ``bpp-on-ansible`` zawiera skrypty Ansible konfigurujące 
+serwery do uruchamiania BPP. Docelowe zastosowanie tych skryptów - 
+serwery typu "bare-metal" czy serwery wirtualne, z pełnym systemem
+operacynym (czytaj: nie-Docker, osoby zainteresowane uruchomieniem 
+BPP w kontenerach dockera zapraszamy do repo `bpp_on_docker`_ ).  
 
-Na ten moment dostępna jest kongfiguracja uruchamiająca i testująca
-wszystko przez Vagranta.
+Instalowanie systemu BPP od zera - instrukcja krok po kroku
+-----------------------------------------------------------
 
-Jako eksperymentalna konfiguracja dołożony jest Docker - ale jedynie do
-testów. Na Dockerze najpierw uruchomiony jest kontener z systemd,
+Dokumentacja w trakcie tworzenia - zapraszamy za jakiś czas...
+
+Testowanie tego repozytorium
+----------------------------
+
+Na potrzeby automatycznego testowania tego repozytorium stworzona 
+jest kongfiguracja  uruchamiająca i testująca wszystko przez Vagranta
+i wchodzi ona w skład tego repozytorium. 
+
+
+Dodatkowo, jako eksperymentalna konfiguracja testująca dołożony jest
+Docker. Na Dockerze najpierw uruchomiony jest kontener z systemd,
 następnie konfigurowany jest on konfiguracją Ansible zawartą w tym repo.
 Jak widać jest to pewne nadużycie Dockera, swoisty krok w tył - więc po
 co? Ano po to, żeby móc weryfikować konfigurację Ansible na serwerach
 typu TravisCI czy CircleCI, które Vagranta nie obsługują.
 
-Osoby zainteresowane uruchomieniem BPP w kontenerach dockera zapraszamy
-do repo ``bpp-on-docker``.
-
-.. |bpp-on-ansible test on Docker| image:: https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml/badge.svg
+.. |Status testów| image:: https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml/badge.svg
    :target: https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml
+
+.. _bpp_on_docker: https://github.com/iplweb/bpp-on-docker/
