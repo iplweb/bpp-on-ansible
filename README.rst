@@ -49,9 +49,9 @@ Aby zainstalować BPP:
    który instaluje system. Jeżeli chcesz szybko skopiować swój klucz SSH na serwer, 
    użyj polecenia ``ssh-copy-id(1)``:
 
-   .. code-block: shell
+   .. code-block:: shell
 
-      $ ssh-copy-id root@example.iplweb.pl
+    $ ssh-copy-id root@example.iplweb.pl
 
 #. Lokalnie potrzebujemy Pythona z wirtualnym środowiskiem, żeby uruchomić Ansible. 
    Jeżeli działasz pod Linux lub macOS to wszystko powinno być na miejscu, a jeżeli 
@@ -60,9 +60,9 @@ Aby zainstalować BPP:
 #. Lokalnie potrzebujemy skopiować zawartość tego repozytorium do jakiegoś katalogu. 
    Potrzebny będzie zatem ``git(1)``:
 
-   .. code-block: shell
+   .. code-block:: shell
 
-      $ git clone https://github.com/iplweb/bpp-on-ansible/
+    $ git clone https://github.com/iplweb/bpp-on-ansible/
 
    To polecenie utworzy katalog ``bpp-on-ansible``.
 
