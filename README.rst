@@ -30,6 +30,13 @@ Aby zainstalować BPP:
 #. Potrzebujemy na serwerze systemu operacyjnego `Ubuntu Linux Server`_ w ostatniej
    wersji LTS, czyli w chwili pisania tej dokumentacji ``22.04-LTS``. 
 
+#. Potrzebujemy certyfikatu SSL dla tego serwera. Od pewnego czasu nieszyfrowane połączenia
+   po protokole HTTP są delikatnie mówiąc wypierane, stąd warto postarać się o certyfikat. 
+   W przeciwnym wypadku zostanie zainstalowany domyślny i przestarzały. Ansible
+   domyślnie szuka certyfikatów w katalogu ``ansible/roles/bpp-site/files/nazwa.serwera`` czyli
+   dla naszej domyślnej domeny będzie to  ``ansible/roles/bpp-site/files/example.iplweb.pl.key``
+   oraz  ``ansible/roles/bpp-site/files/example.iplweb.pl.cert``
+
 #. W dalszej części tej instrukcji zakładamy, że logowanie na użytkownika ``root``
    ma miejsce bez hasła tzn przy wykorzystaniu publicznego klucza SSH użytkownika, 
    który instaluje system. 
@@ -51,7 +58,7 @@ Aby zainstalować BPP:
 
       .. code-block:: 
 
-         example.iplweb.pl ansible_user=root postgresql_host=localhost
+         example.iplweb.pl ansible_user=root postgresql_host=localhost django_site_name="Moj serwer BPP"
 
          [bpp-dbserver]
          example.iplweb.pl
@@ -65,6 +72,10 @@ Aby zainstalować BPP:
        komptuery celem lepszej skalowalności całego przedsięwzięcia. Jeżeli jednak rozdzielimy
        serwer bazodanowy na drugi komputer, należy zmienić ustawienie ``postgresql_host`` na nazwę
        hosta bazodanowego. 
+
+   #. Warto pamiętać, że zmienne konfiguracyjne Ansible możemy upchnąć potem do katalogu ``host_vars/nazwa-servera`` czyli
+      tutaj byłby to katalog ``host_vars/example.iplweb.pl``. W przeciwnym wypadku ta pierwsza linia z pliku
+      konfiguracyjnego może nam się zacząć wydłużać w nieskończoność...
 
 #. Uruchamiamy instalację systemu BPP:
 

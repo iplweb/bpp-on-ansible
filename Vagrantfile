@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
       end
 
 
-      staging.vm.network "private_network", ip: "192.168.111.101"
+      # staging.vm.network "private_network", ip: "192.168.111.101"
       staging.vm.provision "shell", inline: "sudo dd if=/dev/zero of=/swapfile bs=1M count=1024"
       staging.vm.provision "shell", inline: "sudo mkswap /swapfile"
       staging.vm.provision "shell", inline: "sudo swapon /swapfile"
@@ -59,7 +59,6 @@ Vagrant.configure(2) do |config|
 
       staging.ssh.forward_agent = true
       staging.ssh.forward_x11 = true
-
 
       # Prevent SharedFoldersEnableSymlinksCreate errors
       staging.vm.synced_folder ".", '/vagrant', SharedFoldersEnableSymlinksCreate: false
