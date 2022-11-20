@@ -118,6 +118,38 @@ Aby zainstalować BPP:
 
 #. System powinien być dostępny pod adresem serwera czyli ``https://example.iplweb.pl/``
 
+Co dalej?
+---------
+
+Jeżeli udało się zainstalować system BPP, jego baza w konfiguracji domyślnej będzie w mniejszym lub 
+większym stopniu pusta. Pod adresem `bpp.readthedocs.io`_ znajdziemy dokumentację systemu. Być może
+powstał już w niej rozdział o zaczynaniu od zera, na czystej bazie? Kto to wie...
+
+Na ten moment proponujemy: 
+
+Aktualizacja systemu z poziomu Ansible
+--------------------------------------
+
+Aktualizujemy repozytorium ``bpp-on-ansible`` poleceniem ``git pull``, następnie robimy dokładnie
+to samo, co przy instalacji systemu (polecenie ``ansible-playbook ...``). 
+
+Aktualizacja systemu z poziomu konta użytkownika
+------------------------------------------------
+
+#. Proponujemy utworzenie kopii zapasowej serwera aplikacji i bazy danych. 
+#. Po zalogowaniu się na konto użytkownika ``bpp`` prosimy o wykonanie polecenia:
+
+   .. code-block:: shell
+
+      $ pip install --upgrade bpp-iplweb
+      $ bpp-manage.py migrate
+
+#. Po zalogowaniu się na konto administratora prosimy o wykonanie polecenia:
+
+   .. code-block:: shell
+
+      # supervisorctl signal HUP all
+
 Testowanie tego repozytorium
 ----------------------------
 
@@ -142,3 +174,4 @@ nie są przeprowadzane żadne automatyczne testy przy użyciu Dockera.
 .. _Anaconda: https://www.anaconda.com/products/distribution
 .. _.env.example: https://github.com/iplweb/bpp/blob/dev/.env.example
 .. _settings/base.py: https://github.com/iplweb/bpp/blob/dev/src/django_bpp/settings/base.py
+.. bpp.readthedocs.io: https://bpp.readthedocs.io/pl/latest/
