@@ -1,0 +1,14 @@
+---
+- hosts:
+    - all
+  become: yes
+  become_method: sudo
+  roles:
+    - locale
+    - postgresql-server
+    - locale
+    - nginx
+    - redis-server
+    - python
+    - name: bpp-site
+      tags: ['bpp-site',]

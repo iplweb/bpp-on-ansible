@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
 
       staging.vm.provision "ansible" do |ansible|
         ansible.verbose = "v"
-        ansible.playbook = "ansible/bpp-cluster.yml"
+        ansible.playbook = "ansible/testing.yml"
       end
 
       if Vagrant.has_plugin?("vagrant-cachier")
