@@ -28,7 +28,15 @@ Aby zainstalować BPP:
    go za pomocą nazwy domeny. Przykładowo, domena może mieć postać np. ``example.iplweb.pl``
 
 #. Potrzebujemy na serwerze systemu operacyjnego `Ubuntu Linux Server`_ w ostatniej
-   wersji LTS, czyli w chwili pisania tej dokumentacji ``22.04-LTS``. 
+   wersji LTS, czyli w chwili pisania tej dokumentacji ``22.04-LTS``. Po instalacji zaktualizuj
+   jeszcze system poleceniem ``apt upgrade``. Domyślnie zestaw skryptów Ansible instalującym
+   BPP nie przeprowadza tej operacji, zostawiając ją administratorowi:
+
+   .. code-block:: shell
+
+      # apt update
+      # apt full-upgrade -y
+      # reboot
 
 #. Potrzebujemy certyfikat SSL dla tego serwera. Od pewnego czasu nieszyfrowane połączenia
    po protokole HTTP są delikatnie mówiąc wypierane, stąd warto postarać się o certyfikat. 
@@ -71,7 +79,7 @@ Aby zainstalować BPP:
 
       .. code-block:: 
 
-         example.iplweb.pl ansible_user=root postgresql_host=localhost django_site_name="Moj serwer BPP"
+         example.iplweb.pl ansible_user=root django_site_name="Moj serwer BPP"
 
          [bpp-dbserver]
          example.iplweb.pl
@@ -98,12 +106,16 @@ Aby zainstalować BPP:
       ansible-playbook -i hosts.cfg -e ssl_certs_path=`pwd` ansible/bpp-cluster.yml
 
 #. Po instalacji systemu zostanie utworzone konto użytkownika (domyślnie ``bpp``). Konfiguracja systemu
-   znajdzie się w pliku ``.env`` znajdującym się w domowym katalogu użytkownika ``bpp``. Domyślną konfigurację
-   systemu można próbować wzbogacić korzystając z przykładowych ustawień, które można znaleźć w 
-   repozytorium kodu - plik `.env.example`_
+   znajdzie się w pliku ``.env`` znajdującym się w domowym katalogu użytkownika ``bpp`` czyli w ``/home/bpp/.env``. 
+   Domyślną konfigurację systemu po utworzeniu jej przez Ansible można próbować wzbogacić korzystając 
+   z przykładowych ustawień, które można znaleźć w repozytorium kodu - plik `.env.example`_
+
+#. Na lokalnym komputerze (zwanym w terminologii Ansible kontrolerem) zostanie utworzony katalog 
+   ``ansible/credentials`` gdzie znajdą się zapisane wartości haseł do systemu - hasło do bazy danych
+   oraz zawartość zmiennej ``SECRET_KEY`` dla Django. Proponujemy przechowywać te dane w bezpiecznym
+   miejscu. 
 
 #. System powinien być dostępny pod adresem serwera czyli ``https://example.iplweb.pl/``
-
 
 Testowanie tego repozytorium
 ----------------------------

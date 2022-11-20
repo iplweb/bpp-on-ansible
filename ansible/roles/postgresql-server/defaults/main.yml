@@ -3,4 +3,9 @@ postgresql_port: 5432
 postgresql_version: 14
 
 postgresql_user: postgres
+
+# Żeby nie localhost, bo potem do ansible/credentials zapisują się
+# różne hasła do jednego pliku
+postgresql_host: "{{ inventory_host }}"
+
 postgresql_password: "{{ lookup('password', 'credentials/' + postgresql_host + '/postgresql_system_password length=50') }}"
