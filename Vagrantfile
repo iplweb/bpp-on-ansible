@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "staging" do |staging|
-      staging.vm.box = "ubuntu/focal64"
+      staging.vm.box = "ubuntu/jammy64"
       staging.vm.box_check_update = false
 
       staging.vm.provider "parallels" do |v, override|
