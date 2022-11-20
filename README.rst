@@ -125,8 +125,6 @@ Jeżeli udało się zainstalować system BPP, jego baza w konfiguracji domyślne
 większym stopniu pusta. Pod adresem `bpp.readthedocs.io`_ znajdziemy dokumentację systemu. Być może
 powstał już w niej rozdział o zaczynaniu od zera, na czystej bazie? Kto to wie...
 
-Na ten moment proponujemy: 
-
 Aktualizacja systemu z poziomu Ansible
 --------------------------------------
 
