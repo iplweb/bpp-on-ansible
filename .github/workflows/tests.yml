@@ -44,7 +44,9 @@ jobs:
       
     - name: debug2
       run: find .vagrant
-      
+
+    - name: debug5
+      run: cat /etc/hosts
       
     - name: Ansible it
       run: make staging-ansible
