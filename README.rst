@@ -174,4 +174,4 @@ nie są przeprowadzane żadne automatyczne testy przy użyciu Dockera.
 .. _Anaconda: https://www.anaconda.com/products/distribution
 .. _.env.example: https://github.com/iplweb/bpp/blob/dev/.env.example
 .. _settings/base.py: https://github.com/iplweb/bpp/blob/dev/src/django_bpp/settings/base.py
-.. bpp.readthedocs.io: https://bpp.readthedocs.io/pl/latest/
+.. _bpp.readthedocs.io: https://bpp.readthedocs.io/pl/latest/
