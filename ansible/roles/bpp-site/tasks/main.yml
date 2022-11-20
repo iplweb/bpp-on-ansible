@@ -80,7 +80,7 @@
     LANG: pl_PL.UTF-8
     LC_ALL: pl_PL.UTF-8
 
-- name: Database is migrated
+- name: Migracja bazy danych (przy pierwszym uruchomieniu to może dłuuuugo potrwać...)
   become: yes
   become_user: "{{ django_user }}"
   command: "{{ django_manage_py }} migrate --noinput"
