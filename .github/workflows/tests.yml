@@ -27,6 +27,9 @@ jobs:
     - name: Show Vagrant version
       run: vagrant --version
 
+    - name: Install vagrant-hostmanager plugin
+      run: vagrant plugin install vagrant-hostmanager
+      
     - name: Run vagrant up
       run: vagrant up
 

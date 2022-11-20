@@ -129,7 +129,8 @@ Docker. Na Dockerze najpierw uruchomiony jest kontener z systemd,
 następnie konfigurowany jest on konfiguracją Ansible zawartą w tym repo.
 Jak widać jest to pewne nadużycie Dockera, swoisty krok w tył - więc po
 co? Ano po to, żeby móc weryfikować konfigurację Ansible na serwerach
-typu TravisCI czy CircleCI, które Vagranta nie obsługują.
+typu TravisCI czy CircleCI, które Vagranta nie obsługują. Na ten moment jednak
+nie są przeprowadzane żadne automatyczne testy przy użyciu Dockera. 
 
 .. |Status testów| image:: https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml/badge.svg
    :target: https://github.com/iplweb/bpp-on-ansible/actions/workflows/tests.yml
