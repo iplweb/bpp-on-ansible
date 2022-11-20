@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - include_vars: roles/bpp-site/defaults/main.yml
+
+    - name: "Utwórz domyślnego uzytkownika systemu BPP (admin)"
+      shell: . env/bin/activate && bpp-manage.py createsuperuser --email michal.dtz@gmail.com  --username admin --noinput
+      become_user: "{{django_user}}"
+      args:
+        chdir: "{{ django_home_dir }}"
+
+    - name: "Ustal domyślne hasło domyślnego użytkownika systemu BPP (admin)"
+      shell: . ./env/bin/activate && python -c  "import django; django.setup(); from bpp.models import BppUser; u = BppUser.objects.all()[0]; u.set_password('admin'); u.save()"
+      become_user: "{{django_user}}"
+      args:
+        chdir: "{{ django_home_dir }}"
+
+    - name: supervisor restart
+      shell: supervisorctl restart all
+
+#    - name: Zainstaluj plik issue
+#      template: src=issue dest=/etc/issue
+#
+#    - name: Ustaw nazwę hosta
+#      shell: echo "bppdemo" > /etc/hostname

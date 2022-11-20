@@ -69,6 +69,7 @@ Vagrant.configure(2) do |config|
         ansible.playbook = "ansible/testing.yml"
       end
 
+
       if Vagrant.has_plugin?("vagrant-cachier")
         # Ten plugin nie jest zarządzany od jakiegoś czasu
         staging.cache.scope = :box

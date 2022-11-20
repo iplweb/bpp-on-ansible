@@ -103,7 +103,7 @@ Aby zainstalować BPP:
 
    .. code-block:: shell
 
-      ansible-playbook -i hosts.cfg -e ssl_certs_path=`pwd` ansible/bpp-cluster.yml
+      ansible-playbook -i hosts.cfg -e ssl_certs_path=`pwd` bpp-on-ansible/ansible/bpp-cluster.yml
 
 #. Po instalacji systemu zostanie utworzone konto użytkownika (domyślnie ``bpp``). Konfiguracja systemu
    znajdzie się w pliku ``.env`` znajdującym się w domowym katalogu użytkownika ``bpp`` czyli w ``/home/bpp/.env``. 
@@ -121,9 +121,23 @@ Aby zainstalować BPP:
 Co dalej?
 ---------
 
-Jeżeli udało się zainstalować system BPP, jego baza w konfiguracji domyślnej będzie w mniejszym lub 
+Na ten moment masz zainstalowany system i czystą bazę danych. Proponujemy
+utworzenie domyślnego konta użytkownika, również za pomocą Ansible:
+
+.. code-block:: shell
+
+  ansible-playbook -i hosts.cfg bpp-on-ansible/ansible/default-user.yml
+
+Do systemu zostanie dodany użytkownik "admin" z hasłem "admin".
+
+Jeżeli udało się zainstalować system BPP, jego baza w konfiguracji domyślnej będzie w mniejszym lub
 większym stopniu pusta. Pod adresem `bpp.readthedocs.io`_ znajdziemy dokumentację systemu. Być może
-powstał już w niej rozdział o zaczynaniu od zera, na czystej bazie? Kto to wie...
+powstał już w niej rozdział o zaczynaniu od zera, na czystej bazie? Kto to wie... Wstępnie
+proponujemy zalogować się do modułu redagowania za pomocą admin/admin i dodanie
+nowej uczelni w menu "Struktura -> Uczelnie". 
+
+Aktualizacja oprogramowania BPP
+===============================
 
 Aktualizacja systemu z poziomu Ansible
 --------------------------------------
