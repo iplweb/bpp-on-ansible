@@ -32,6 +32,9 @@ jobs:
     - name: Show Vagrant version
       run: vagrant --version
 
+    - name: Show allowed network ranges
+      run: cat /etc/vbox/networks.conf
+
     - name: Run vagrant up
       run: vagrant up
 
