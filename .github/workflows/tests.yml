@@ -39,9 +39,6 @@ jobs:
     - name: ssh into box after boot
       run: vagrant ssh -c "echo 'hello world!'"
       
-    - name: debug1
-      run: find ~/.vagrant
-      
     - name: debug3
       run: find ~/.ssh
       
