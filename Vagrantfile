@@ -60,6 +60,10 @@ Vagrant.configure(2) do |config|
       staging.ssh.forward_agent = true
       staging.ssh.forward_x11 = true
 
+
+      # Prevent SharedFoldersEnableSymlinksCreate errors
+      staging.vm.synced_folder ".", '/vagrant', SharedFoldersEnableSymlinksCreate: false
+
       if Vagrant.has_plugin?("vagrant-cachier")
         # Ten plugin nie jest zarządzany od jakiegoś czasu
         staging.cache.scope = :box
