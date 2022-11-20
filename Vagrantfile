@@ -49,7 +49,8 @@ Vagrant.configure(2) do |config|
       end
 
 
-      staging.vm.network "private_network", ip: "10.0.0.5"
+      # Obraz na GitHub Actions nie lubi tego:
+      # staging.vm.network "private_network", ip: "10.0.0.5"
       staging.vm.provision "shell", inline: "sudo dd if=/dev/zero of=/swapfile bs=1M count=1024"
       staging.vm.provision "shell", inline: "sudo mkswap /swapfile"
       staging.vm.provision "shell", inline: "sudo swapon /swapfile"
@@ -62,6 +63,11 @@ Vagrant.configure(2) do |config|
 
       # Prevent SharedFoldersEnableSymlinksCreate errors
       staging.vm.synced_folder ".", '/vagrant', SharedFoldersEnableSymlinksCreate: false
+
+      staging.vm.provision "ansible" do |ansible|
+        ansible.verbose = "v"
+        ansible.playbook = "ansible/bpp-cluster.yml"
+      end
 
       if Vagrant.has_plugin?("vagrant-cachier")
         # Ten plugin nie jest zarządzany od jakiegoś czasu
