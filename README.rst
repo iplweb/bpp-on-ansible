@@ -79,7 +79,7 @@ Aby zainstalować BPP:
 
       .. code-block:: 
 
-         example.iplweb.pl ansible_user=root django_site_name="Moj serwer BPP"
+         example.iplweb.pl ansible_user=root
 
          [bpp-dbserver]
          example.iplweb.pl

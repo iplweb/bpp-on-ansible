@@ -4,6 +4,8 @@ django_user: bpp
 django_project_name: django_bpp
 django_hostname: "{{ inventory_hostname }}"
 
+django_site_name: "Moja strona BPP"
+
 django_settings_module: django_bpp.settings.production
 
 database_user: "{{ django_user }}"
