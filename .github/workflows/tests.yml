@@ -36,9 +36,8 @@ jobs:
     - name: Install Ansible
       run: pip install ansible
 
+    - name: ssh into box after boot
+      run: vagrant ssh -c "echo 'hello world!'"
+
     - name: Ansible it
       run: make staging-ansible
-
-#    - name: ssh into box after boot
-#      run: vagrant ssh -c "echo 'hello world!'"
-

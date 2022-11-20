@@ -20,7 +20,7 @@ staging-up:
 	vagrant up
 
 staging-ansible:
-	ansible-playbook ansible/bpp-cluster.yml $(PRIVATE_KEY)
+	ansible-playbook ansible/bpp-cluster.yml #  $(PRIVATE_KEY)
 
 staging-update: # "szybka" ścieżka aktualizacji
 	ansible-playbook ansible/bpp-cluster.yml -t django-site $(PRIVATE_KEY)
