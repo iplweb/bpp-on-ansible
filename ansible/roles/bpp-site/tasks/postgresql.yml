@@ -1,5 +1,7 @@
 ---
-- include_vars: ../../postgresql-server/defaults/main.yml
+- include_vars:
+    file: ../../postgresql-server/defaults/main.yml
+    name: psql_defaults
 
 - name: Create PostgreSQL user
   postgresql_user:
@@ -8,19 +10,19 @@
     role_attr_flags=CREATEDB,SUPERUSER 
     state=present 
 
-    login_user={{ postgresql_user }}
-    login_host={{ postgresql_host }} 
-    login_password="{{ postgresql_password }}"    
-    login_port={{ postgresql_port }}
+    login_user={{ postgresql_user|default(psql_defaults.postgresql_user) }}
+    login_host={{ postgresql_host|default(psql_defaults.postgresql_host) }} 
+    login_password="{{ postgresql_password|default(psql_defaults.postgresql_password) }}"    
+    login_port={{ postgresql_port|default(psql_defaults.postgresql_port) }}
 
 - name: CreatePostgreSQL database
   postgresql_db:
     name={{ database_name }}
     
-    login_host={{ postgresql_host }}
+    login_host={{ postgresql_host|default(psql_defaults.postgresql_host) }} 
     login_user={{ database_user }}
     login_password="{{ lookup('password', 'credentials/' + inventory_hostname + '/' + database_user + '/' + '/database_password length=25') }}"
-    login_port="{{ postgresql_port }}"
+    login_port={{ postgresql_port|default(psql_defaults.postgresql_port) }}
 
   args:
     owner: "{{ database_user }}"
@@ -36,20 +38,20 @@
     lang=plpython3u 
     state=present
     
-    login_host={{ postgresql_host }}
+    login_host={{ postgresql_host|default(psql_defaults.postgresql_host) }} 
     login_user={{ database_user }}
     login_password="{{ lookup('password', 'credentials/' + inventory_hostname + '/' + database_user + '/' + '/database_password length=25') }}"
-    login_port={{ postgresql_port }}
+    login_port={{ postgresql_port|default(psql_defaults.postgresql_port) }}
 
 - name: Create PostgreSQL collation for pl_PL
   postgresql_query:
     db: "{{database_name}}"
     query: CREATE COLLATION pl_PL(locale='pl_PL.utf8');
 
-    login_host: "{{ postgresql_host }}"
+    login_host: "{{ postgresql_host|default(psql_defaults.postgresql_host) }}"
     login_user: "{{ database_user }}"
     login_password: "{{ lookup('password', 'credentials/' + inventory_hostname + '/' + database_user + '/' + '/database_password length=25') }}"
-    login_port: "{{ postgresql_port }}"
+    login_port: "{{ postgresql_port|default(psql_defaults.postgresql_port) }}"
   ignore_errors: yes
   register: psql_coll_err
 
@@ -62,10 +64,10 @@
     db: "{{database_name}}"
     query: CREATE COLLATION pl_PL(locale='pl_PL.utf8');
 
-    login_host: "{{ postgresql_host }}"
+    login_host: "{{ postgresql_host|default(psql_defaults.postgresql_host) }}"
     login_user: "{{ database_user }}"
     login_password: "{{ lookup('password', 'credentials/' + inventory_hostname + '/' + database_user + '/' + '/database_password length=25') }}"
-    login_port: "{{ postgresql_port }}"
+    login_port: "{{ postgresql_port|default(psql_defaults.postgresql_port) }}"
   ignore_errors: yes
   register: psql_coll_err_2
 

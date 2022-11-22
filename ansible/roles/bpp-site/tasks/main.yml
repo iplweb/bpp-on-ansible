@@ -1,15 +1,17 @@
-- include_vars: ../../postgresql-server/defaults/main.yml
+- include_vars:
+    file: ../../postgresql-server/defaults/main.yml
+    name: psql_defaults
 
 - name: Update apt cache
   apt:  update_cache=yes
 
-- name: Install apt packages and PostgreSQL version {{ postgresql_version }}
+- name: Install apt packages and PostgreSQL version {{ postgresql_version|default(psql_defaults.postgresql_version) }}
   ansible.builtin.apt:
     pkg:
       - build-essential
       - python3-psycopg2
       - postgresql-common
-      - postgresql-client-{{ postgresql_version }}
+      - postgresql-client-{{ postgresql_version|default(psql_defaults.postgresql_version) }}
       - libpq-dev
       - acl
       
