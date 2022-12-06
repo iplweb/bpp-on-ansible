@@ -1,3 +1,8 @@
+2022-12-06
+----------
+
+* ustawienia LDAP i serwera pocztowego do zmiennych
+
 2022-11-20
 ----------
 

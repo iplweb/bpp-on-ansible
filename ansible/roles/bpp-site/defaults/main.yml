@@ -15,6 +15,26 @@ database_password: "{{ lookup('password', 'credentials/' + inventory_hostname + 
 
 django_secret_key: "{{ lookup('password', 'credentials/' + inventory_hostname + '/' + django_user + '/' + django_project_name + '/' + '/django_secret_key length=512') }}"
 
+#
+# LDAP
+#
+
+# django_bpp_auth_ldap_server_uri:
+# django_bpp_auth_ldap_bind_dn:
+# django_bpp_auth_ldap_bind_password:
+django_bpp_auth_ldap_user_search: "ou=Pracownicy,dc=auth,dc=local"
+
+#
+# Serwer pocztowy
+#
+
+# django_bpp_email_url: "smtp+ssl://username@password@server:port"
+# django_bpp_default_from_email: user@domain
+# django_bpp_default_server_email: user@domain
+
+#
+# Ustawienia systemowe
+#
 
 django_group: "{{ django_user }}"
 
