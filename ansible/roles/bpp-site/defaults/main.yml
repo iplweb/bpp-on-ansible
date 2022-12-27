@@ -56,7 +56,7 @@ django_db_name: "{{ database_name }}"
 django_db_user: "{{ database_user }}"
 django_db_password: "{{ database_password }}"
 django_db_host: "{{ database_host }}"
-django_db_port: "{{ postgresql_port }}"
+django_db_port: "{{ postgresql_port|default(5432) }}"
 
 django_set_as_default_http_in_nginx: false
 django_set_as_default_https_in_nginx: true
