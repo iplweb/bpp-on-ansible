@@ -1,3 +1,10 @@
+#
+# Ten plik jest zarządzany przez Ansible. Zmiany mogą być nadpisane.
+#
+# Jeżeli chcesz nadpisać te ustawienia w swojej konfiguracji, użyj
+# pliku ~/.env.local
+#
+
 {{ django_envvar_prefix }}_DB_PASSWORD="{{ django_db_password }}"
 {{ django_envvar_prefix }}_HOSTNAME="{{ django_hostname }}"
 {{ django_envvar_prefix }}_SECRET_KEY="{{ django_secret_key }}"
@@ -25,22 +32,22 @@
 {{ django_envvar_prefix }}_RAVEN_CONFIG_URL="{{ django_raven_url|default("") }}"
 SENTRYSDK_CONFIG_URL="{{ django_raven_url|default("") }}"
 
-{% if django_bpp_auth_ldap_server_uri %}
+{% if django_bpp_auth_ldap_server_uri|default("") %}
 AUTH_LDAP_SERVER_URI="{{ django_bpp_auth_ldap_server_uri }}"
 AUTH_LDAP_BIND_DN="{{ django_bpp_auth_ldap_bind_dn }}""
 AUTH_LDAP_BIND_PASSWORD="{{ django_bpp_auth_ldap_bind_password }}"
 
-AUTH_LDAP_USER_SEARCH="{{ django_bpp_auth_ldap_user_searc }}"
+AUTH_LDAP_USER_SEARCH="{{ django_bpp_auth_ldap_user_search }}"
 {% endif %}
 
-{% if django_bpp_email_url %}
+{% if django_bpp_email_url|default("") %}
 EMAIL_URL="django_bpp_email_url"
 {% endif %}
 
-{% if django_bpp_default_from_email %}
+{% if django_bpp_default_from_email|default("") %}
 DEFAULT_FROM_EMAIL="{{ django_bpp_default_from_email }}"
 {% endif %}
 
-{% if django_bpp_default_server_email %}
+{% if django_bpp_default_server_email|default("") %}
 SERVER_EMAIL="{{ django_bpp_default_server_email }}"
 {% endif %}
