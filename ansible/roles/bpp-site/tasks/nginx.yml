@@ -3,7 +3,6 @@
   copy:
     src: "{{ ssl_certs_path }}/{{ django_hostname }}.{{ item }}"
     dest: "/etc/ssl/private/{{ django_hostname }}.{{ item }}"
-    force: no
   with_items: ['cert', 'key']
   notify:
     - reload nginx conf
