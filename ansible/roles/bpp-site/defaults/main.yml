@@ -1,4 +1,5 @@
 ---
+django_package_name: "bpp-iplweb"
 
 django_user: bpp
 django_project_name: django_bpp
